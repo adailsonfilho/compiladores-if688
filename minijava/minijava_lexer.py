@@ -1,6 +1,6 @@
-#***************************************
-#** Elementos Léxicos de MiniJava **
-#***************************************
+####################
+## MiniJava Lexer ##
+####################
 
 import ply.lex as lex
 
@@ -8,10 +8,12 @@ class MiniJavaLexer(object):
 
 	reserved = {
 		'class':'CLASS',
+		'String' :'STRING',
 		'public':'PUBLIC',
 		'extends':'EXTENDS',
 		'static': 'STATIC',
 		'void':'VOID',
+		'main':'MAIN',
 		'int': 'INT',
 		'boolean': 'BOOLEAN',
 		'while':'WHILE',
@@ -21,34 +23,36 @@ class MiniJavaLexer(object):
 		'false':'FALSE',
 		'true': 'TRUE',
 		'this':'THIS',
-		'new':'NEW'
+		'new':'NEW',
+		'Syste.out.println' : 'SYSTEM_PRINTLN'
 	}
 
-	tokens = [
+	_tokens = [
+		# 'eof',
+		'LENGTH',
 		'WHITESPACE',
 		'BLOCK_COMMENT',
 		'LINE_COMMENT',
 		'ID',
 		'LIT_INT',
-		'LIT_FLOAT',
+		# 'LIT_FLOAT',
 		#Bool OPs
-		'OR',
+		# 'OR',
 		'AND',
-		'EQUAL',	
-		'DIFFERENT',
+		# 'EQUAL',	
+		# 'DIFFERENT',
 		'LESS_THAN',
-		'LESS_THAN_OR_EQUAL',
-		'GREATER_THEN',
-		'GREATER_THEN_OR_EQUAL',
+		# 'LESS_THAN_OR_EQUAL',
+		# 'GREATER_THEN',
+		# 'GREATER_THEN_OR_EQUAL',
 		'NOT',
 		#Aritimetic OPs
 		'PLUS',
 		'MINUS',
 		'MULTIPLY',
-		'DIVIDE',
-		'MOD',
+		# 'DIVIDE',
+		# 'MOD',
 		#BOUNDARY
-		'BOUNDARY',
 		'LPAREN',
 		'RPAREN',
 		'LBRACE',
@@ -59,7 +63,10 @@ class MiniJavaLexer(object):
 		'DOT',
 		'COMMA',
 		'LET'
-		]+ list(reserved.values())
+		] + list(reserved.values())
+
+	#The parser input for the variable called 'tokens must be a tuple
+	tokens = tuple(_tokens)
 
 	#- Whitespace: espaços em branco, quebra de linha, tabulação e carriage return;
 	def t_WHITESPACE(self,t):
@@ -75,6 +82,7 @@ class MiniJavaLexer(object):
 	# Described at the begin: reserved
 
 	#- Delimitadores: ; . , = ( ) { } [ ]
+	t_LENGTH = r'length'
 	t_LPAREN = r'\('
 	t_RPAREN = r'\)'
 	t_LBRACE = r'\{'
@@ -93,9 +101,9 @@ class MiniJavaLexer(object):
 		r'(//.*?)'
 		pass # No return value. Token discarded
 
-	def t_BOUNDARY(self, t):
-		"BOUNDARY: LPAREN | RPAREN | LBRACE | RBRACE | LBRACKET | RBRACKET"
-		return t
+	# def t_BOUNDARY(self, t):
+	# 	"BOUNDARY: LPAREN | RPAREN | LBRACE | RBRACE | LBRACKET | RBRACKET"
+	# 	return t
 
 	#- Identificadores: um identificador começa com uma letra ou underline e é seguido por qualquer quantidade de letras, underline e dígitos. Apenas letras entre A/a e Z/z são permitidos, há diferença entre maiúscula e minúscula. Palavras-chave não são identificadores;
 	def t_ID(self, t):
@@ -110,10 +118,10 @@ class MiniJavaLexer(object):
 		return t
 
 	#- Literais ponto flutuante: Uma parte inteira seguida de uma parte fracionária, separada por ponto. Na parte fracionária, podemos incluir um expoente, seguindo os exemplos dos slides de análise léxica.
-	def t_LIT_FLOAT(self, t):
-		r'\d*\.\d+'
-		t.value = float(t.value)
-		return t
+	# def t_LIT_FLOAT(self, t):
+	# 	r'\d*\.\d+'
+	# 	t.value = float(t.value)
+	# 	return t
 
 		#Comentários e whitespace não tem significado algum, exceto para separar os tokens.
 	# Error handling rule
@@ -121,22 +129,30 @@ class MiniJavaLexer(object):
 	  print("Illegal character '%s'" % t.value[0])
 	  t.lexer.skip(1)
 
+	# # EOF handling rule
+	# def t_eof(self, t):
+	#     # Get more input (Example)
+	#     if not t:
+	#     	return None
+	#     else:
+	#     	pass
+
 	#Bool OPs
-	t_OR = r'\|\|'
+	# t_OR = r'\|\|'
 	t_AND = r'&&'
-	t_EQUAL = r'=='
-	t_DIFFERENT = r'!='
+	# t_EQUAL = r'=='
+	# t_DIFFERENT = r'!='
 	t_LESS_THAN = r'<'
-	t_LESS_THAN_OR_EQUAL = r'<='
-	t_GREATER_THEN = r'>'
-	t_GREATER_THEN_OR_EQUAL = r'>='
+	# t_LESS_THAN_OR_EQUAL = r'<='
+	# t_GREATER_THEN = r'>'
+	# t_GREATER_THEN_OR_EQUAL = r'>='
 	t_NOT = r'!'
 	#Aritimetic OPs
 	t_PLUS = r'\+'
 	t_MINUS = r'-'
 	t_MULTIPLY = r'\*'
-	t_DIVIDE = r'/'
-	t_MOD = r'%'
+	# t_DIVIDE = r'/'
+	# t_MOD = r'%'
 
 	## TEST WITH INPUTS ##
 	# Build the lexer
@@ -155,8 +171,6 @@ class MiniJavaLexer(object):
 
 	def token(self):
 		return self.lexer.token()
-
-
 
 ##HOW USE IT OUTHERE:
 # # Build the lexer and try it out

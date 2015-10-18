@@ -3,7 +3,7 @@
 import os
 from minijava_lexer import MiniJavaLexer
 
-rel_root = '.\input_test'
+rel_root = '.\inputs_test'
 
 paths = os.listdir(rel_root)
 
@@ -15,8 +15,8 @@ for path in paths:
 	print('Analising Lex of file: '+path)
 
 	with open (rel_root+'\\'+path, "r") as myfile:
-		data = myfile.read().replace(r'\s','')
-		mj_lexer.test(data)
+		file_data = myfile.read().replace(r'\s','')
+		mj_lexer.test(file_data)
 
 		# Tokenize
 		while True:

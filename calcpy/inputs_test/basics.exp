@@ -1,0 +1,10 @@
+x = 10
+y = 4
+mult = x*y
+mult
+div = x/y
+div
+sum = x+y
+sum
+sub = x-y
+sub
