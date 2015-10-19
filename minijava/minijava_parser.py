@@ -111,7 +111,6 @@ def t_error(t):
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
 
-
 t_AND = r'&&'
 t_LESS_THAN = r'<'
 t_NOT = r'!'
@@ -143,11 +142,12 @@ def p_goal(p):
 
 #BFN>> MainClass	::=	"class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
 def p_mainclass(p):
-    '''mainclass : CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE'''
+    '''mainclass : CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
+    '''
     print('MainClass')
 
 def p_classdeclaration_star(p):
-	'''classdeclaration_star : classdeclaration classdeclaration_star
+	'''classdeclaration_star : classdeclaration_star classdeclaration
 							| empty
 	'''
 	print('Many Vars declarations')
@@ -164,18 +164,18 @@ def p_extends_opt(p):
 	'''
 	print('Extends '+str(p[1]))
 
+#( Statement )*
+def p_statement_star(p):
+	'''statement_star : statement_star statement
+					| empty
+	'''
+	print('Many or empty Statements')
+
 #BFN>> Statement	::=	"{" ( Statement )* "}"
 def p_statement_block(p):
 	'''statement : LBRACE statement_star RBRACE
 	'''
 	print('Statement BLOCK')
-
-#( Statement )*
-def p_statement_star(p):
-	'''statement_star : statement statement_star
-					| empty
-	'''
-	print('Many Statements')
 
 #BFN>> Statement	::=	"if" "(" Expression ")" Statement "else" Statement
 def p_statement_if(p):
@@ -199,7 +199,7 @@ def p_statement_syso(p):
 def p_statement_id_exp(p):
 	'''statement : id LET expression SEMICOLON
 	'''
-	print('LET Statement')
+	print('id LET Expression')
 
 #BFN>> Statement	::=	Identifier "[" Expression "]" "=" Expression ";"
 def p_statement_id_array_exp(p):
@@ -208,8 +208,8 @@ def p_statement_id_array_exp(p):
 	print('LET array position statement')
 
 def p_vardeclaration_star(p):
-	'''vardeclaration_star : vardeclaration vardeclaration_star
-							| empty
+	'''vardeclaration_star : empty
+							| vardeclaration_star vardeclaration
 	'''
 	print('Many Vars declarations')
 
@@ -223,38 +223,41 @@ def p_vardeclaration(p):
 def p_type_int_array(p):
 	'''type : INT LBRACKET RBRACKET
 	'''
-	print('Type: '+str(p[1])+"[]")
+	print('Type: int[]')
 
 #BFN>> Type	::=	boolean
 def p_type_boolean(p):
 	'''type : BOOLEAN
 	'''
-	print('Type: '+str(p[1]))
+	print('Type: Boolean')
 
 #BFN>> Type	::=	boolean
 def p_type_int(p):
 	'''type : INT
 	'''
-	print('Type: '+str(p[1]))
+	print('Type: int')
 
 #BFN>> Type	::=	boolean
 def p_type_id(p):
 	'''type : id
 	'''
-	print('Type: '+str(p[1]))
+	print('Type: id')
 
 def p_methoddeclaration_star(p):
-	'''methoddeclaration_star : methoddeclaration methoddeclaration_star
+	'''methoddeclaration_star : methoddeclaration_star methoddeclaration
 							| empty
 	'''
 	print('Many methods declarations')
 
 #BFN>> MethodDeclaration	::=	"public" Type Identifier "(" ( Type Identifier ( "," Type Identifier )* )? ")" "{" ( VarDeclaration )* ( Statement )* "return" Expression ";" "}"
 def p_methoddeclaration(p):
-	'''methoddeclaration : PUBLIC type id LPAREN type id params_opt RPAREN LBRACE vardeclaration_star statement_star RETURN expression SEMICOLON RBRACE
+	'''methoddeclaration : PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
 	'''
 	print('Single method declaration')
-
+	
+def p_method_body(p):
+	'''methodbody : vardeclaration_star statement_star
+	'''
 #( "," Type Identifier )*
 def p_params_opt(p):
 	'''params_opt : COMMA type id params_opt
@@ -288,16 +291,16 @@ def p_expression_length(p):
 def p_expression_params(p):
 	'''expression : expression DOT id LPAREN expression expression_opt RPAREN
 	'''
-	print('Expression.length')
+	print('Method calling')
 
 def p_expression_opt(p):
 	'''expression_opt : COMMA expression expression_opt
 					| empty
 	'''
-	print('Expression.length')
+	print('Methods parameters')
 
 # Expression	::=	<INTEGER_LITERAL>
-def p_expression_lit_int(p):
+def p_expression_litint(p):
 	'''expression : LIT_INT
 	'''
 	print('Literal inteiro: '+str(p[1]))
@@ -342,7 +345,7 @@ def p_expression_new_instance(p):
 def p_expression_not(p):
 	'''expression : NOT expression
 	'''
-	print('Expression: not exp')
+	print('! Expression')
 
 # Expression	::=	"(" Expression ")"
 def p_expression_paren(p):
@@ -352,7 +355,7 @@ def p_expression_paren(p):
 
 def p_id(p):
     'id : ID'
-    print('ID:'+str(p[1]))
+    print('ID :'+str(p[1]))
     # try:
     # 	print(names[p[1]])
     # except LookupError:
@@ -361,10 +364,11 @@ def p_id(p):
 
 def p_empty(p):
     'empty :'
+    print('EMPTY')
     pass
 
-def p_error(t):
-    print("Syntax error at '%s'" % t.value)
+def p_error(p):
+	print("Syntax error at '"+str(p.value)+"'")
 
 import ply.yacc as yacc
 # Build the parser
@@ -397,8 +401,8 @@ paths = os.listdir(rel_root)
 for path in paths:
 	print('Analisis of file: '+path)
 
-	input('See Analysis')
-	# if path.endswith(".java2"):
+	input('>> Press any key to syntax analysis')
+	# if path.endswith("2.java"):
 	with open (rel_root+'\\'+path, "r") as my_file:
 		# print('Do you want to proceed?')
 		# print('Y/n')

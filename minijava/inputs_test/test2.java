@@ -1,26 +1,26 @@
-class BinarySearch{
-	public static void main(String[] a){
+class Test2{
+	public static void main(String[] ab){
 		{
-			{
-				if(true && false){
-					if(false && true){
-						if(3 < 4){
+		// 	{
+		// 		if(true && false){
+		// 			if(false && true){
+		// 				if(3 < 4){
 
-						}
-						else{
+		// 				}
+		// 				else{
 
-						}
+		// 				}
 
 
-					}else{
+		// 			}else{
 
-					}
+		// 			}
 
-				}else{
+		// 		}else{
 
-				}
+		// 		}
 
-			}
+		// 	}
 
 		}
     }
@@ -28,40 +28,41 @@ class BinarySearch{
 
 class Test{
 
-	int [] x;
+	int[] x;
 	boolean y;
 	int z;
 	Test t2;
 
-
-
 	public int doExtra(int a, int b){
 
-		x = new int[10];
+		boolean aa;
+
+		x = new int[2];
 
 		System.out.println(123);
 
-		while(a < b){
-			g = new Test();
-		}
+		// while(a < b){
+		// 	g = new Test();
+		// }
 
-		if(true){
+		// if(true){
 
-		}else{
+		// }else{
 
-		}
+		// }
 
 
-		if(a < 3){
-			a = 10;
-		}else{
-			a = 200;
-			x[2] = 10;
-		}
+		// if(a < 3){
+		// 	a = 10;
+		// }else{
+		// 	a = 200;
+		// 	x[2] = 10;
+		// }
 
-		z = this.doExtra(1,2);
+		// z = this.doExtra(1,2);
 
-		return ((((5 + 4)-2)*10)*a);
+		// return ((((5 + 4)-2)*10)*a);
+		return 87;
 	}
 
 }
