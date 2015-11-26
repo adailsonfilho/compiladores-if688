@@ -368,7 +368,7 @@ def p_empty(p):
     pass
 
 def p_error(p):
-	print("Syntax error at '"+str(p.value)+"'")
+	print("Syntax error at '"+str(p)+"'")
 
 import ply.yacc as yacc
 # Build the parser

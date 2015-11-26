@@ -2,20 +2,20 @@ Created by PLY version 3.6 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    WHITESPACE
+    SYSTEM
     BLOCK_COMMENT
     LINE_COMMENT
-    SYSTEM
-    WHITESPACE
 
 Grammar
 
 Rule 0     S' -> goal
 Rule 1     goal -> mainclass classdeclaration_star
-Rule 2     mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+Rule 2     mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 Rule 3     classdeclaration_star -> classdeclaration_star classdeclaration
 Rule 4     classdeclaration_star -> empty
-Rule 5     classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
-Rule 6     extends_opt -> EXTENDS ID
+Rule 5     classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
+Rule 6     extends_opt -> EXTENDS id
 Rule 7     extends_opt -> empty
 Rule 8     statement_star -> statement_star statement
 Rule 9     statement_star -> empty
@@ -23,20 +23,20 @@ Rule 10    statement -> LBRACE statement_star RBRACE
 Rule 11    statement -> IF LPAREN expression RPAREN statement ELSE statement
 Rule 12    statement -> WHILE LPAREN expression RPAREN statement
 Rule 13    statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-Rule 14    statement -> ID LET expression SEMICOLON
-Rule 15    statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON
+Rule 14    statement -> id LET expression SEMICOLON
+Rule 15    statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON
 Rule 16    vardeclaration_star -> empty
 Rule 17    vardeclaration_star -> vardeclaration_star vardeclaration
-Rule 18    vardeclaration -> type ID SEMICOLON
+Rule 18    vardeclaration -> type id SEMICOLON
 Rule 19    type -> INT LBRACKET RBRACKET
 Rule 20    type -> BOOLEAN
 Rule 21    type -> INT
-Rule 22    type -> ID
+Rule 22    type -> id
 Rule 23    methoddeclaration_star -> methoddeclaration_star methoddeclaration
 Rule 24    methoddeclaration_star -> empty
-Rule 25    methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+Rule 25    methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
 Rule 26    methodbody -> vardeclaration_star statement_star
-Rule 27    params_opt -> COMMA type ID params_opt
+Rule 27    params_opt -> COMMA type id params_opt
 Rule 28    params_opt -> empty
 Rule 29    expression -> expression AND expression
 Rule 30    expression -> expression LESS_THAN expression
@@ -45,19 +45,20 @@ Rule 32    expression -> expression MINUS expression
 Rule 33    expression -> expression TIMES expression
 Rule 34    expression -> expression LBRACKET expression RBRACKET
 Rule 35    expression -> expression DOT LENGTH
-Rule 36    expression -> expression DOT ID LPAREN expression expression_opt RPAREN
+Rule 36    expression -> expression DOT id LPAREN expression expression_opt RPAREN
 Rule 37    expression_opt -> COMMA expression expression_opt
 Rule 38    expression_opt -> empty
 Rule 39    expression -> LIT_INT
 Rule 40    expression -> TRUE
 Rule 41    expression -> FALSE
-Rule 42    expression -> ID
+Rule 42    expression -> id
 Rule 43    expression -> THIS
 Rule 44    expression -> NEW INT LBRACKET expression RBRACKET
-Rule 45    expression -> NEW ID LPAREN RPAREN
+Rule 45    expression -> NEW id LPAREN RPAREN
 Rule 46    expression -> NOT expression
 Rule 47    expression -> LPAREN expression RPAREN
-Rule 48    empty -> <empty>
+Rule 48    id -> ID
+Rule 49    empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -70,7 +71,7 @@ DOT                  : 35 36
 ELSE                 : 11
 EXTENDS              : 6
 FALSE                : 41
-ID                   : 2 2 5 6 14 15 18 22 25 25 27 36 42 45
+ID                   : 48
 IF                   : 11
 INT                  : 19 21 44
 LBRACE               : 2 2 5 10 25
@@ -113,6 +114,7 @@ expression           : 11 12 13 14 15 15 25 29 29 30 30 31 31 32 32 33 33 34 34 
 expression_opt       : 36 37
 extends_opt          : 5
 goal                 : 0
+id                   : 2 2 5 6 14 15 18 22 25 25 27 36 42 45
 mainclass            : 1
 methodbody           : 25
 methoddeclaration    : 23
@@ -130,47 +132,82 @@ state 0
 
     (0) S' -> . goal
     (1) goal -> . mainclass classdeclaration_star
-    (2) mainclass -> . CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (2) mainclass -> . CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    CLASS           shift and go to state 2
+    CLASS           shift and go to state 1
 
-    mainclass                      shift and go to state 3
-    goal                           shift and go to state 1
+    mainclass                      shift and go to state 2
+    goal                           shift and go to state 3
 
 state 1
+
+    (2) mainclass -> CLASS . id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
+    (48) id -> . ID
+
+    ID              shift and go to state 4
+
+    id                             shift and go to state 5
+
+state 2
+
+    (1) goal -> mainclass . classdeclaration_star
+    (3) classdeclaration_star -> . classdeclaration_star classdeclaration
+    (4) classdeclaration_star -> . empty
+    (49) empty -> .
+
+    CLASS           reduce using rule 49 (empty -> .)
+    $end            reduce using rule 49 (empty -> .)
+
+    classdeclaration_star          shift and go to state 6
+    empty                          shift and go to state 7
+
+state 3
 
     (0) S' -> goal .
 
 
 
-state 2
-
-    (2) mainclass -> CLASS . ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
-
-    ID              shift and go to state 4
-
-
-state 3
-
-    (1) goal -> mainclass . classdeclaration_star
-    (3) classdeclaration_star -> . classdeclaration_star classdeclaration
-    (4) classdeclaration_star -> . empty
-    (48) empty -> .
-
-    CLASS           reduce using rule 48 (empty -> .)
-    $end            reduce using rule 48 (empty -> .)
-
-    empty                          shift and go to state 5
-    classdeclaration_star          shift and go to state 6
-
 state 4
 
-    (2) mainclass -> CLASS ID . LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (48) id -> ID .
 
-    LBRACE          shift and go to state 7
+    LET             reduce using rule 48 (id -> ID .)
+    LBRACKET        reduce using rule 48 (id -> ID .)
+    LBRACE          reduce using rule 48 (id -> ID .)
+    ID              reduce using rule 48 (id -> ID .)
+    COMMA           reduce using rule 48 (id -> ID .)
+    RPAREN          reduce using rule 48 (id -> ID .)
+    LPAREN          reduce using rule 48 (id -> ID .)
+    AND             reduce using rule 48 (id -> ID .)
+    LESS_THAN       reduce using rule 48 (id -> ID .)
+    PLUS            reduce using rule 48 (id -> ID .)
+    MINUS           reduce using rule 48 (id -> ID .)
+    TIMES           reduce using rule 48 (id -> ID .)
+    DOT             reduce using rule 48 (id -> ID .)
+    SEMICOLON       reduce using rule 48 (id -> ID .)
+    RBRACKET        reduce using rule 48 (id -> ID .)
+    EXTENDS         reduce using rule 48 (id -> ID .)
 
 
 state 5
+
+    (2) mainclass -> CLASS id . LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
+
+    LBRACE          shift and go to state 8
+
+
+state 6
+
+    (1) goal -> mainclass classdeclaration_star .
+    (3) classdeclaration_star -> classdeclaration_star . classdeclaration
+    (5) classdeclaration -> . CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
+
+    $end            reduce using rule 1 (goal -> mainclass classdeclaration_star .)
+    CLASS           shift and go to state 10
+
+    classdeclaration               shift and go to state 9
+
+state 7
 
     (4) classdeclaration_star -> empty .
 
@@ -178,29 +215,11 @@ state 5
     $end            reduce using rule 4 (classdeclaration_star -> empty .)
 
 
-state 6
-
-    (1) goal -> mainclass classdeclaration_star .
-    (3) classdeclaration_star -> classdeclaration_star . classdeclaration
-    (5) classdeclaration -> . CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
-
-    $end            reduce using rule 1 (goal -> mainclass classdeclaration_star .)
-    CLASS           shift and go to state 8
-
-    classdeclaration               shift and go to state 9
-
-state 7
-
-    (2) mainclass -> CLASS ID LBRACE . PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
-
-    PUBLIC          shift and go to state 10
-
-
 state 8
 
-    (5) classdeclaration -> CLASS . ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
+    (2) mainclass -> CLASS id LBRACE . PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    ID              shift and go to state 11
+    PUBLIC          shift and go to state 11
 
 
 state 9
@@ -213,114 +232,127 @@ state 9
 
 state 10
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC . STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (5) classdeclaration -> CLASS . id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
+    (48) id -> . ID
 
-    STATIC          shift and go to state 12
+    ID              shift and go to state 4
 
+    id                             shift and go to state 12
 
 state 11
 
-    (5) classdeclaration -> CLASS ID . extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
-    (6) extends_opt -> . EXTENDS ID
-    (7) extends_opt -> . empty
-    (48) empty -> .
+    (2) mainclass -> CLASS id LBRACE PUBLIC . STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    EXTENDS         shift and go to state 14
-    LBRACE          reduce using rule 48 (empty -> .)
+    STATIC          shift and go to state 13
 
-    extends_opt                    shift and go to state 13
-    empty                          shift and go to state 15
 
 state 12
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC . VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (5) classdeclaration -> CLASS id . extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE
+    (6) extends_opt -> . EXTENDS id
+    (7) extends_opt -> . empty
+    (49) empty -> .
 
-    VOID            shift and go to state 16
+    EXTENDS         shift and go to state 14
+    LBRACE          reduce using rule 49 (empty -> .)
 
+    empty                          shift and go to state 16
+    extends_opt                    shift and go to state 15
 
 state 13
 
-    (5) classdeclaration -> CLASS ID extends_opt . LBRACE vardeclaration_star methoddeclaration_star RBRACE
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC . VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    LBRACE          shift and go to state 17
+    VOID            shift and go to state 17
 
 
 state 14
 
-    (6) extends_opt -> EXTENDS . ID
+    (6) extends_opt -> EXTENDS . id
+    (48) id -> . ID
 
-    ID              shift and go to state 18
+    ID              shift and go to state 4
 
+    id                             shift and go to state 18
 
 state 15
+
+    (5) classdeclaration -> CLASS id extends_opt . LBRACE vardeclaration_star methoddeclaration_star RBRACE
+
+    LBRACE          shift and go to state 19
+
+
+state 16
 
     (7) extends_opt -> empty .
 
     LBRACE          reduce using rule 7 (extends_opt -> empty .)
 
 
-state 16
-
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID . MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
-
-    MAIN            shift and go to state 19
-
-
 state 17
 
-    (5) classdeclaration -> CLASS ID extends_opt LBRACE . vardeclaration_star methoddeclaration_star RBRACE
-    (16) vardeclaration_star -> . empty
-    (17) vardeclaration_star -> . vardeclaration_star vardeclaration
-    (48) empty -> .
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID . MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    INT             reduce using rule 48 (empty -> .)
-    BOOLEAN         reduce using rule 48 (empty -> .)
-    ID              reduce using rule 48 (empty -> .)
-    RBRACE          reduce using rule 48 (empty -> .)
-    PUBLIC          reduce using rule 48 (empty -> .)
+    MAIN            shift and go to state 20
 
-    vardeclaration_star            shift and go to state 20
-    empty                          shift and go to state 21
 
 state 18
 
-    (6) extends_opt -> EXTENDS ID .
+    (6) extends_opt -> EXTENDS id .
 
-    LBRACE          reduce using rule 6 (extends_opt -> EXTENDS ID .)
+    LBRACE          reduce using rule 6 (extends_opt -> EXTENDS id .)
 
 
 state 19
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN . LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (5) classdeclaration -> CLASS id extends_opt LBRACE . vardeclaration_star methoddeclaration_star RBRACE
+    (16) vardeclaration_star -> . empty
+    (17) vardeclaration_star -> . vardeclaration_star vardeclaration
+    (49) empty -> .
 
-    LPAREN          shift and go to state 22
+    INT             reduce using rule 49 (empty -> .)
+    BOOLEAN         reduce using rule 49 (empty -> .)
+    ID              reduce using rule 49 (empty -> .)
+    RBRACE          reduce using rule 49 (empty -> .)
+    PUBLIC          reduce using rule 49 (empty -> .)
 
+    vardeclaration_star            shift and go to state 21
+    empty                          shift and go to state 22
 
 state 20
 
-    (5) classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star . methoddeclaration_star RBRACE
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN . LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
+
+    LPAREN          shift and go to state 23
+
+
+state 21
+
+    (5) classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star . methoddeclaration_star RBRACE
     (17) vardeclaration_star -> vardeclaration_star . vardeclaration
     (23) methoddeclaration_star -> . methoddeclaration_star methoddeclaration
     (24) methoddeclaration_star -> . empty
-    (18) vardeclaration -> . type ID SEMICOLON
-    (48) empty -> .
+    (18) vardeclaration -> . type id SEMICOLON
+    (49) empty -> .
     (19) type -> . INT LBRACKET RBRACKET
     (20) type -> . BOOLEAN
     (21) type -> . INT
-    (22) type -> . ID
+    (22) type -> . id
+    (48) id -> . ID
 
-    RBRACE          reduce using rule 48 (empty -> .)
-    PUBLIC          reduce using rule 48 (empty -> .)
-    INT             shift and go to state 23
-    BOOLEAN         shift and go to state 26
-    ID              shift and go to state 24
+    RBRACE          reduce using rule 49 (empty -> .)
+    PUBLIC          reduce using rule 49 (empty -> .)
+    INT             shift and go to state 27
+    BOOLEAN         shift and go to state 24
+    ID              shift and go to state 4
 
-    vardeclaration                 shift and go to state 25
-    type                           shift and go to state 27
-    methoddeclaration_star         shift and go to state 28
-    empty                          shift and go to state 29
+    methoddeclaration_star         shift and go to state 25
+    vardeclaration                 shift and go to state 26
+    id                             shift and go to state 28
+    type                           shift and go to state 29
+    empty                          shift and go to state 30
 
-state 21
+state 22
 
     (16) vardeclaration_star -> empty .
 
@@ -336,30 +368,32 @@ state 21
     RETURN          reduce using rule 16 (vardeclaration_star -> empty .)
 
 
-state 22
-
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN . STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
-
-    STRING          shift and go to state 30
-
-
 state 23
 
-    (19) type -> INT . LBRACKET RBRACKET
-    (21) type -> INT .
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN . STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    LBRACKET        shift and go to state 31
-    ID              reduce using rule 21 (type -> INT .)
+    STRING          shift and go to state 31
 
 
 state 24
 
-    (22) type -> ID .
+    (20) type -> BOOLEAN .
 
-    ID              reduce using rule 22 (type -> ID .)
+    ID              reduce using rule 20 (type -> BOOLEAN .)
 
 
 state 25
+
+    (5) classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star . RBRACE
+    (23) methoddeclaration_star -> methoddeclaration_star . methoddeclaration
+    (25) methoddeclaration -> . PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+
+    RBRACE          shift and go to state 34
+    PUBLIC          shift and go to state 33
+
+    methoddeclaration              shift and go to state 32
+
+state 26
 
     (17) vardeclaration_star -> vardeclaration_star vardeclaration .
 
@@ -375,32 +409,32 @@ state 25
     RETURN          reduce using rule 17 (vardeclaration_star -> vardeclaration_star vardeclaration .)
 
 
-state 26
-
-    (20) type -> BOOLEAN .
-
-    ID              reduce using rule 20 (type -> BOOLEAN .)
-
-
 state 27
 
-    (18) vardeclaration -> type . ID SEMICOLON
+    (19) type -> INT . LBRACKET RBRACKET
+    (21) type -> INT .
 
-    ID              shift and go to state 32
+    LBRACKET        shift and go to state 35
+    ID              reduce using rule 21 (type -> INT .)
 
 
 state 28
 
-    (5) classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star . RBRACE
-    (23) methoddeclaration_star -> methoddeclaration_star . methoddeclaration
-    (25) methoddeclaration -> . PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (22) type -> id .
 
-    RBRACE          shift and go to state 33
-    PUBLIC          shift and go to state 34
+    ID              reduce using rule 22 (type -> id .)
 
-    methoddeclaration              shift and go to state 35
 
 state 29
+
+    (18) vardeclaration -> type . id SEMICOLON
+    (48) id -> . ID
+
+    ID              shift and go to state 4
+
+    id                             shift and go to state 36
+
+state 30
 
     (24) methoddeclaration_star -> empty .
 
@@ -408,50 +442,14 @@ state 29
     PUBLIC          reduce using rule 24 (methoddeclaration_star -> empty .)
 
 
-state 30
-
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING . LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
-
-    LBRACKET        shift and go to state 36
-
-
 state 31
 
-    (19) type -> INT LBRACKET . RBRACKET
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING . LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
 
-    RBRACKET        shift and go to state 37
+    LBRACKET        shift and go to state 37
 
 
 state 32
-
-    (18) vardeclaration -> type ID . SEMICOLON
-
-    SEMICOLON       shift and go to state 38
-
-
-state 33
-
-    (5) classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .
-
-    CLASS           reduce using rule 5 (classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .)
-    $end            reduce using rule 5 (classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .)
-
-
-state 34
-
-    (25) methoddeclaration -> PUBLIC . type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
-    (19) type -> . INT LBRACKET RBRACKET
-    (20) type -> . BOOLEAN
-    (21) type -> . INT
-    (22) type -> . ID
-
-    INT             shift and go to state 23
-    BOOLEAN         shift and go to state 26
-    ID              shift and go to state 24
-
-    type                           shift and go to state 39
-
-state 35
 
     (23) methoddeclaration_star -> methoddeclaration_star methoddeclaration .
 
@@ -459,129 +457,170 @@ state 35
     PUBLIC          reduce using rule 23 (methoddeclaration_star -> methoddeclaration_star methoddeclaration .)
 
 
+state 33
+
+    (25) methoddeclaration -> PUBLIC . type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (19) type -> . INT LBRACKET RBRACKET
+    (20) type -> . BOOLEAN
+    (21) type -> . INT
+    (22) type -> . id
+    (48) id -> . ID
+
+    INT             shift and go to state 27
+    BOOLEAN         shift and go to state 24
+    ID              shift and go to state 4
+
+    type                           shift and go to state 38
+    id                             shift and go to state 28
+
+state 34
+
+    (5) classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .
+
+    CLASS           reduce using rule 5 (classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .)
+    $end            reduce using rule 5 (classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE .)
+
+
+state 35
+
+    (19) type -> INT LBRACKET . RBRACKET
+
+    RBRACKET        shift and go to state 39
+
+
 state 36
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET . RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE
+    (18) vardeclaration -> type id . SEMICOLON
 
-    RBRACKET        shift and go to state 40
+    SEMICOLON       shift and go to state 40
 
 
 state 37
+
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET . RBRACKET id RPAREN LBRACE statement RBRACE RBRACE
+
+    RBRACKET        shift and go to state 41
+
+
+state 38
+
+    (25) methoddeclaration -> PUBLIC type . id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (48) id -> . ID
+
+    ID              shift and go to state 4
+
+    id                             shift and go to state 42
+
+state 39
 
     (19) type -> INT LBRACKET RBRACKET .
 
     ID              reduce using rule 19 (type -> INT LBRACKET RBRACKET .)
 
 
-state 38
-
-    (18) vardeclaration -> type ID SEMICOLON .
-
-    INT             reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    BOOLEAN         reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    ID              reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    LBRACE          reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    IF              reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    WHILE           reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    SYSTEM_PRINTLN  reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    RETURN          reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    RBRACE          reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-    PUBLIC          reduce using rule 18 (vardeclaration -> type ID SEMICOLON .)
-
-
-state 39
-
-    (25) methoddeclaration -> PUBLIC type . ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
-
-    ID              shift and go to state 41
-
-
 state 40
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET . ID RPAREN LBRACE statement RBRACE RBRACE
+    (18) vardeclaration -> type id SEMICOLON .
 
-    ID              shift and go to state 42
+    INT             reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    BOOLEAN         reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    ID              reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    RBRACE          reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    PUBLIC          reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    LBRACE          reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    IF              reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    WHILE           reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    SYSTEM_PRINTLN  reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
+    RETURN          reduce using rule 18 (vardeclaration -> type id SEMICOLON .)
 
 
 state 41
 
-    (25) methoddeclaration -> PUBLIC type ID . LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET . id RPAREN LBRACE statement RBRACE RBRACE
+    (48) id -> . ID
 
-    LPAREN          shift and go to state 43
+    ID              shift and go to state 4
 
+    id                             shift and go to state 43
 
 state 42
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID . RPAREN LBRACE statement RBRACE RBRACE
+    (25) methoddeclaration -> PUBLIC type id . LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
 
-    RPAREN          shift and go to state 44
+    LPAREN          shift and go to state 44
 
 
 state 43
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN . type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
-    (19) type -> . INT LBRACKET RBRACKET
-    (20) type -> . BOOLEAN
-    (21) type -> . INT
-    (22) type -> . ID
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id . RPAREN LBRACE statement RBRACE RBRACE
 
-    INT             shift and go to state 23
-    BOOLEAN         shift and go to state 26
-    ID              shift and go to state 24
+    RPAREN          shift and go to state 45
 
-    type                           shift and go to state 45
 
 state 44
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN . LBRACE statement RBRACE RBRACE
+    (25) methoddeclaration -> PUBLIC type id LPAREN . type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (19) type -> . INT LBRACKET RBRACKET
+    (20) type -> . BOOLEAN
+    (21) type -> . INT
+    (22) type -> . id
+    (48) id -> . ID
 
-    LBRACE          shift and go to state 46
+    INT             shift and go to state 27
+    BOOLEAN         shift and go to state 24
+    ID              shift and go to state 4
 
+    type                           shift and go to state 46
+    id                             shift and go to state 28
 
 state 45
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type . ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN . LBRACE statement RBRACE RBRACE
 
-    ID              shift and go to state 47
+    LBRACE          shift and go to state 47
 
 
 state 46
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE . statement RBRACE RBRACE
+    (25) methoddeclaration -> PUBLIC type id LPAREN type . id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (48) id -> . ID
+
+    ID              shift and go to state 4
+
+    id                             shift and go to state 48
+
+state 47
+
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE . statement RBRACE RBRACE
     (10) statement -> . LBRACE statement_star RBRACE
     (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
     (12) statement -> . WHILE LPAREN expression RPAREN statement
     (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
 
-    LBRACE          shift and go to state 51
+    LBRACE          shift and go to state 53
     IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
 
-    statement                      shift and go to state 53
-
-state 47
-
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID . params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
-    (27) params_opt -> . COMMA type ID params_opt
-    (28) params_opt -> . empty
-    (48) empty -> .
-
-    COMMA           shift and go to state 54
-    RPAREN          reduce using rule 48 (empty -> .)
-
-    empty                          shift and go to state 56
-    params_opt                     shift and go to state 55
+    statement                      shift and go to state 51
+    id                             shift and go to state 50
 
 state 48
 
-    (13) statement -> SYSTEM_PRINTLN . LPAREN expression RPAREN SEMICOLON
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id . params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (27) params_opt -> . COMMA type id params_opt
+    (28) params_opt -> . empty
+    (49) empty -> .
 
-    LPAREN          shift and go to state 57
+    COMMA           shift and go to state 55
+    RPAREN          reduce using rule 49 (empty -> .)
 
+    params_opt                     shift and go to state 56
+    empty                          shift and go to state 57
 
 state 49
 
@@ -592,103 +631,80 @@ state 49
 
 state 50
 
-    (12) statement -> WHILE . LPAREN expression RPAREN statement
+    (14) statement -> id . LET expression SEMICOLON
+    (15) statement -> id . LBRACKET expression RBRACKET LET expression SEMICOLON
 
-    LPAREN          shift and go to state 59
+    LET             shift and go to state 59
+    LBRACKET        shift and go to state 60
 
 
 state 51
 
-    (10) statement -> LBRACE . statement_star RBRACE
-    (8) statement_star -> . statement_star statement
-    (9) statement_star -> . empty
-    (48) empty -> .
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement . RBRACE RBRACE
 
-    RBRACE          reduce using rule 48 (empty -> .)
-    LBRACE          reduce using rule 48 (empty -> .)
-    IF              reduce using rule 48 (empty -> .)
-    WHILE           reduce using rule 48 (empty -> .)
-    SYSTEM_PRINTLN  reduce using rule 48 (empty -> .)
-    ID              reduce using rule 48 (empty -> .)
+    RBRACE          shift and go to state 61
 
-    statement_star                 shift and go to state 61
-    empty                          shift and go to state 60
 
 state 52
 
-    (14) statement -> ID . LET expression SEMICOLON
-    (15) statement -> ID . LBRACKET expression RBRACKET LET expression SEMICOLON
+    (13) statement -> SYSTEM_PRINTLN . LPAREN expression RPAREN SEMICOLON
 
-    LET             shift and go to state 63
-    LBRACKET        shift and go to state 62
+    LPAREN          shift and go to state 62
 
 
 state 53
 
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement . RBRACE RBRACE
+    (10) statement -> LBRACE . statement_star RBRACE
+    (8) statement_star -> . statement_star statement
+    (9) statement_star -> . empty
+    (49) empty -> .
 
-    RBRACE          shift and go to state 64
+    RBRACE          reduce using rule 49 (empty -> .)
+    LBRACE          reduce using rule 49 (empty -> .)
+    IF              reduce using rule 49 (empty -> .)
+    WHILE           reduce using rule 49 (empty -> .)
+    SYSTEM_PRINTLN  reduce using rule 49 (empty -> .)
+    ID              reduce using rule 49 (empty -> .)
 
+    statement_star                 shift and go to state 64
+    empty                          shift and go to state 63
 
 state 54
 
-    (27) params_opt -> COMMA . type ID params_opt
-    (19) type -> . INT LBRACKET RBRACKET
-    (20) type -> . BOOLEAN
-    (21) type -> . INT
-    (22) type -> . ID
+    (12) statement -> WHILE . LPAREN expression RPAREN statement
 
-    INT             shift and go to state 23
-    BOOLEAN         shift and go to state 26
-    ID              shift and go to state 24
+    LPAREN          shift and go to state 65
 
-    type                           shift and go to state 65
 
 state 55
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt . RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+    (27) params_opt -> COMMA . type id params_opt
+    (19) type -> . INT LBRACKET RBRACKET
+    (20) type -> . BOOLEAN
+    (21) type -> . INT
+    (22) type -> . id
+    (48) id -> . ID
 
-    RPAREN          shift and go to state 66
+    INT             shift and go to state 27
+    BOOLEAN         shift and go to state 24
+    ID              shift and go to state 4
 
+    type                           shift and go to state 66
+    id                             shift and go to state 28
 
 state 56
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt . RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE
+
+    RPAREN          shift and go to state 67
+
+
+state 57
 
     (28) params_opt -> empty .
 
     RPAREN          reduce using rule 28 (params_opt -> empty .)
 
-
-state 57
-
-    (13) statement -> SYSTEM_PRINTLN LPAREN . expression RPAREN SEMICOLON
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 73
 
 state 58
 
@@ -700,31 +716,33 @@ state 58
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 76
+    expression                     shift and go to state 75
+    id                             shift and go to state 70
 
 state 59
 
-    (12) statement -> WHILE LPAREN . expression RPAREN statement
+    (14) statement -> id LET . expression SEMICOLON
     (29) expression -> . expression AND expression
     (30) expression -> . expression LESS_THAN expression
     (31) expression -> . expression PLUS expression
@@ -732,29 +750,106 @@ state 59
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
     expression                     shift and go to state 77
+    id                             shift and go to state 70
 
 state 60
+
+    (15) statement -> id LBRACKET . expression RBRACKET LET expression SEMICOLON
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 78
+    id                             shift and go to state 70
+
+state 61
+
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE . RBRACE
+
+    RBRACE          shift and go to state 79
+
+
+state 62
+
+    (13) statement -> SYSTEM_PRINTLN LPAREN . expression RPAREN SEMICOLON
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 80
+    id                             shift and go to state 70
+
+state 63
 
     (9) statement_star -> empty .
 
@@ -767,7 +862,7 @@ state 60
     RETURN          reduce using rule 9 (statement_star -> empty .)
 
 
-state 61
+state 64
 
     (10) statement -> LBRACE statement_star . RBRACE
     (8) statement_star -> statement_star . statement
@@ -775,106 +870,23 @@ state 61
     (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
     (12) statement -> . WHILE LPAREN expression RPAREN statement
     (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
 
-    RBRACE          shift and go to state 78
-    LBRACE          shift and go to state 51
+    RBRACE          shift and go to state 81
+    LBRACE          shift and go to state 53
     IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
 
-    statement                      shift and go to state 79
-
-state 62
-
-    (15) statement -> ID LBRACKET . expression RBRACKET LET expression SEMICOLON
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 80
-
-state 63
-
-    (14) statement -> ID LET . expression SEMICOLON
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 81
-
-state 64
-
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE . RBRACE
-
-    RBRACE          shift and go to state 82
-
+    statement                      shift and go to state 82
+    id                             shift and go to state 50
 
 state 65
 
-    (27) params_opt -> COMMA type . ID params_opt
-
-    ID              shift and go to state 83
-
-
-state 66
-
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN . LBRACE methodbody RETURN expression SEMICOLON RBRACE
-
-    LBRACE          shift and go to state 84
-
-
-state 67
-
-    (47) expression -> LPAREN . expression RPAREN
+    (12) statement -> WHILE LPAREN . expression RPAREN statement
     (29) expression -> . expression AND expression
     (30) expression -> . expression LESS_THAN expression
     (31) expression -> . expression PLUS expression
@@ -882,128 +894,58 @@ state 67
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 85
+    expression                     shift and go to state 83
+    id                             shift and go to state 70
+
+state 66
+
+    (27) params_opt -> COMMA type . id params_opt
+    (48) id -> . ID
+
+    ID              shift and go to state 4
+
+    id                             shift and go to state 84
+
+state 67
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN . LBRACE methodbody RETURN expression SEMICOLON RBRACE
+
+    LBRACE          shift and go to state 85
+
 
 state 68
 
-    (40) expression -> TRUE .
-
-    AND             reduce using rule 40 (expression -> TRUE .)
-    LESS_THAN       reduce using rule 40 (expression -> TRUE .)
-    PLUS            reduce using rule 40 (expression -> TRUE .)
-    MINUS           reduce using rule 40 (expression -> TRUE .)
-    TIMES           reduce using rule 40 (expression -> TRUE .)
-    LBRACKET        reduce using rule 40 (expression -> TRUE .)
-    DOT             reduce using rule 40 (expression -> TRUE .)
-    RPAREN          reduce using rule 40 (expression -> TRUE .)
-    RBRACKET        reduce using rule 40 (expression -> TRUE .)
-    SEMICOLON       reduce using rule 40 (expression -> TRUE .)
-    COMMA           reduce using rule 40 (expression -> TRUE .)
-
-
-state 69
-
-    (41) expression -> FALSE .
-
-    AND             reduce using rule 41 (expression -> FALSE .)
-    LESS_THAN       reduce using rule 41 (expression -> FALSE .)
-    PLUS            reduce using rule 41 (expression -> FALSE .)
-    MINUS           reduce using rule 41 (expression -> FALSE .)
-    TIMES           reduce using rule 41 (expression -> FALSE .)
-    LBRACKET        reduce using rule 41 (expression -> FALSE .)
-    DOT             reduce using rule 41 (expression -> FALSE .)
-    RPAREN          reduce using rule 41 (expression -> FALSE .)
-    RBRACKET        reduce using rule 41 (expression -> FALSE .)
-    SEMICOLON       reduce using rule 41 (expression -> FALSE .)
-    COMMA           reduce using rule 41 (expression -> FALSE .)
-
-
-state 70
-
     (44) expression -> NEW . INT LBRACKET expression RBRACKET
-    (45) expression -> NEW . ID LPAREN RPAREN
+    (45) expression -> NEW . id LPAREN RPAREN
+    (48) id -> . ID
 
     INT             shift and go to state 86
-    ID              shift and go to state 87
+    ID              shift and go to state 4
 
+    id                             shift and go to state 87
 
-state 71
-
-    (42) expression -> ID .
-
-    AND             reduce using rule 42 (expression -> ID .)
-    LESS_THAN       reduce using rule 42 (expression -> ID .)
-    PLUS            reduce using rule 42 (expression -> ID .)
-    MINUS           reduce using rule 42 (expression -> ID .)
-    TIMES           reduce using rule 42 (expression -> ID .)
-    LBRACKET        reduce using rule 42 (expression -> ID .)
-    DOT             reduce using rule 42 (expression -> ID .)
-    RPAREN          reduce using rule 42 (expression -> ID .)
-    RBRACKET        reduce using rule 42 (expression -> ID .)
-    SEMICOLON       reduce using rule 42 (expression -> ID .)
-    COMMA           reduce using rule 42 (expression -> ID .)
-
-
-state 72
-
-    (43) expression -> THIS .
-
-    AND             reduce using rule 43 (expression -> THIS .)
-    LESS_THAN       reduce using rule 43 (expression -> THIS .)
-    PLUS            reduce using rule 43 (expression -> THIS .)
-    MINUS           reduce using rule 43 (expression -> THIS .)
-    TIMES           reduce using rule 43 (expression -> THIS .)
-    LBRACKET        reduce using rule 43 (expression -> THIS .)
-    DOT             reduce using rule 43 (expression -> THIS .)
-    RPAREN          reduce using rule 43 (expression -> THIS .)
-    RBRACKET        reduce using rule 43 (expression -> THIS .)
-    SEMICOLON       reduce using rule 43 (expression -> THIS .)
-    COMMA           reduce using rule 43 (expression -> THIS .)
-
-
-state 73
-
-    (13) statement -> SYSTEM_PRINTLN LPAREN expression . RPAREN SEMICOLON
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    RPAREN          shift and go to state 88
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-
-state 74
+state 69
 
     (39) expression -> LIT_INT .
 
@@ -1014,15 +956,66 @@ state 74
     TIMES           reduce using rule 39 (expression -> LIT_INT .)
     LBRACKET        reduce using rule 39 (expression -> LIT_INT .)
     DOT             reduce using rule 39 (expression -> LIT_INT .)
-    RPAREN          reduce using rule 39 (expression -> LIT_INT .)
-    RBRACKET        reduce using rule 39 (expression -> LIT_INT .)
-    SEMICOLON       reduce using rule 39 (expression -> LIT_INT .)
     COMMA           reduce using rule 39 (expression -> LIT_INT .)
+    RPAREN          reduce using rule 39 (expression -> LIT_INT .)
+    SEMICOLON       reduce using rule 39 (expression -> LIT_INT .)
+    RBRACKET        reduce using rule 39 (expression -> LIT_INT .)
 
 
-state 75
+state 70
 
-    (46) expression -> NOT . expression
+    (42) expression -> id .
+
+    AND             reduce using rule 42 (expression -> id .)
+    LESS_THAN       reduce using rule 42 (expression -> id .)
+    PLUS            reduce using rule 42 (expression -> id .)
+    MINUS           reduce using rule 42 (expression -> id .)
+    TIMES           reduce using rule 42 (expression -> id .)
+    LBRACKET        reduce using rule 42 (expression -> id .)
+    DOT             reduce using rule 42 (expression -> id .)
+    COMMA           reduce using rule 42 (expression -> id .)
+    RPAREN          reduce using rule 42 (expression -> id .)
+    SEMICOLON       reduce using rule 42 (expression -> id .)
+    RBRACKET        reduce using rule 42 (expression -> id .)
+
+
+state 71
+
+    (43) expression -> THIS .
+
+    AND             reduce using rule 43 (expression -> THIS .)
+    LESS_THAN       reduce using rule 43 (expression -> THIS .)
+    PLUS            reduce using rule 43 (expression -> THIS .)
+    MINUS           reduce using rule 43 (expression -> THIS .)
+    TIMES           reduce using rule 43 (expression -> THIS .)
+    LBRACKET        reduce using rule 43 (expression -> THIS .)
+    DOT             reduce using rule 43 (expression -> THIS .)
+    COMMA           reduce using rule 43 (expression -> THIS .)
+    RPAREN          reduce using rule 43 (expression -> THIS .)
+    SEMICOLON       reduce using rule 43 (expression -> THIS .)
+    RBRACKET        reduce using rule 43 (expression -> THIS .)
+
+
+state 72
+
+    (40) expression -> TRUE .
+
+    AND             reduce using rule 40 (expression -> TRUE .)
+    LESS_THAN       reduce using rule 40 (expression -> TRUE .)
+    PLUS            reduce using rule 40 (expression -> TRUE .)
+    MINUS           reduce using rule 40 (expression -> TRUE .)
+    TIMES           reduce using rule 40 (expression -> TRUE .)
+    LBRACKET        reduce using rule 40 (expression -> TRUE .)
+    DOT             reduce using rule 40 (expression -> TRUE .)
+    COMMA           reduce using rule 40 (expression -> TRUE .)
+    RPAREN          reduce using rule 40 (expression -> TRUE .)
+    SEMICOLON       reduce using rule 40 (expression -> TRUE .)
+    RBRACKET        reduce using rule 40 (expression -> TRUE .)
+
+
+state 73
+
+    (47) expression -> LPAREN . expression RPAREN
     (29) expression -> . expression AND expression
     (30) expression -> . expression LESS_THAN expression
     (31) expression -> . expression PLUS expression
@@ -1030,29 +1023,48 @@ state 75
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 96
+    expression                     shift and go to state 88
+    id                             shift and go to state 70
 
-state 76
+state 74
+
+    (41) expression -> FALSE .
+
+    AND             reduce using rule 41 (expression -> FALSE .)
+    LESS_THAN       reduce using rule 41 (expression -> FALSE .)
+    PLUS            reduce using rule 41 (expression -> FALSE .)
+    MINUS           reduce using rule 41 (expression -> FALSE .)
+    TIMES           reduce using rule 41 (expression -> FALSE .)
+    LBRACKET        reduce using rule 41 (expression -> FALSE .)
+    DOT             reduce using rule 41 (expression -> FALSE .)
+    COMMA           reduce using rule 41 (expression -> FALSE .)
+    RPAREN          reduce using rule 41 (expression -> FALSE .)
+    SEMICOLON       reduce using rule 41 (expression -> FALSE .)
+    RBRACKET        reduce using rule 41 (expression -> FALSE .)
+
+
+state 75
 
     (11) statement -> IF LPAREN expression . RPAREN statement ELSE statement
     (29) expression -> expression . AND expression
@@ -1062,21 +1074,55 @@ state 76
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    RPAREN          shift and go to state 97
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    RPAREN          shift and go to state 90
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
+
+state 76
+
+    (46) expression -> NOT . expression
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 97
+    id                             shift and go to state 70
 
 state 77
 
-    (12) statement -> WHILE LPAREN expression . RPAREN statement
+    (14) statement -> id LET expression . SEMICOLON
     (29) expression -> expression . AND expression
     (30) expression -> expression . LESS_THAN expression
     (31) expression -> expression . PLUS expression
@@ -1084,33 +1130,85 @@ state 77
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    RPAREN          shift and go to state 98
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    SEMICOLON       shift and go to state 98
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
 
 state 78
 
+    (15) statement -> id LBRACKET expression . RBRACKET LET expression SEMICOLON
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+    RBRACKET        shift and go to state 99
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+
+
+state 79
+
+    (2) mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE .
+
+    CLASS           reduce using rule 2 (mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE .)
+    $end            reduce using rule 2 (mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE .)
+
+
+state 80
+
+    (13) statement -> SYSTEM_PRINTLN LPAREN expression . RPAREN SEMICOLON
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+    RPAREN          shift and go to state 100
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+
+
+state 81
+
     (10) statement -> LBRACE statement_star RBRACE .
 
+    RBRACE          reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     LBRACE          reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     IF              reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     WHILE           reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     SYSTEM_PRINTLN  reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     ID              reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
-    RETURN          reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
-    RBRACE          reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
     ELSE            reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
+    RETURN          reduce using rule 10 (statement -> LBRACE statement_star RBRACE .)
 
 
-state 79
+state 82
 
     (8) statement_star -> statement_star statement .
 
@@ -1123,113 +1221,61 @@ state 79
     RETURN          reduce using rule 8 (statement_star -> statement_star statement .)
 
 
-state 80
-
-    (15) statement -> ID LBRACKET expression . RBRACKET LET expression SEMICOLON
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    RBRACKET        shift and go to state 99
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-
-state 81
-
-    (14) statement -> ID LET expression . SEMICOLON
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    SEMICOLON       shift and go to state 100
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-
-state 82
-
-    (2) mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE .
-
-    CLASS           reduce using rule 2 (mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE .)
-    $end            reduce using rule 2 (mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE .)
-
-
 state 83
 
-    (27) params_opt -> COMMA type ID . params_opt
-    (27) params_opt -> . COMMA type ID params_opt
-    (28) params_opt -> . empty
-    (48) empty -> .
+    (12) statement -> WHILE LPAREN expression . RPAREN statement
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    COMMA           shift and go to state 54
-    RPAREN          reduce using rule 48 (empty -> .)
+    RPAREN          shift and go to state 101
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
-    empty                          shift and go to state 56
-    params_opt                     shift and go to state 101
 
 state 84
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE . methodbody RETURN expression SEMICOLON RBRACE
-    (26) methodbody -> . vardeclaration_star statement_star
-    (16) vardeclaration_star -> . empty
-    (17) vardeclaration_star -> . vardeclaration_star vardeclaration
-    (48) empty -> .
+    (27) params_opt -> COMMA type id . params_opt
+    (27) params_opt -> . COMMA type id params_opt
+    (28) params_opt -> . empty
+    (49) empty -> .
 
-    INT             reduce using rule 48 (empty -> .)
-    BOOLEAN         reduce using rule 48 (empty -> .)
-    ID              reduce using rule 48 (empty -> .)
-    LBRACE          reduce using rule 48 (empty -> .)
-    IF              reduce using rule 48 (empty -> .)
-    WHILE           reduce using rule 48 (empty -> .)
-    SYSTEM_PRINTLN  reduce using rule 48 (empty -> .)
-    RETURN          reduce using rule 48 (empty -> .)
+    COMMA           shift and go to state 55
+    RPAREN          reduce using rule 49 (empty -> .)
 
-    vardeclaration_star            shift and go to state 102
-    methodbody                     shift and go to state 103
-    empty                          shift and go to state 21
+    empty                          shift and go to state 57
+    params_opt                     shift and go to state 102
 
 state 85
 
-    (47) expression -> LPAREN expression . RPAREN
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE . methodbody RETURN expression SEMICOLON RBRACE
+    (26) methodbody -> . vardeclaration_star statement_star
+    (16) vardeclaration_star -> . empty
+    (17) vardeclaration_star -> . vardeclaration_star vardeclaration
+    (49) empty -> .
 
-    RPAREN          shift and go to state 104
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    INT             reduce using rule 49 (empty -> .)
+    BOOLEAN         reduce using rule 49 (empty -> .)
+    ID              reduce using rule 49 (empty -> .)
+    LBRACE          reduce using rule 49 (empty -> .)
+    IF              reduce using rule 49 (empty -> .)
+    WHILE           reduce using rule 49 (empty -> .)
+    SYSTEM_PRINTLN  reduce using rule 49 (empty -> .)
+    RETURN          reduce using rule 49 (empty -> .)
 
+    methodbody                     shift and go to state 103
+    vardeclaration_star            shift and go to state 104
+    empty                          shift and go to state 22
 
 state 86
 
@@ -1240,156 +1286,34 @@ state 86
 
 state 87
 
-    (45) expression -> NEW ID . LPAREN RPAREN
+    (45) expression -> NEW id . LPAREN RPAREN
 
     LPAREN          shift and go to state 106
 
 
 state 88
 
-    (13) statement -> SYSTEM_PRINTLN LPAREN expression RPAREN . SEMICOLON
+    (47) expression -> LPAREN expression . RPAREN
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    SEMICOLON       shift and go to state 107
+    RPAREN          shift and go to state 107
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
 
 state 89
-
-    (30) expression -> expression LESS_THAN . expression
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 108
-
-state 90
-
-    (35) expression -> expression DOT . LENGTH
-    (36) expression -> expression DOT . ID LPAREN expression expression_opt RPAREN
-
-    LENGTH          shift and go to state 109
-    ID              shift and go to state 110
-
-
-state 91
-
-    (33) expression -> expression TIMES . expression
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 111
-
-state 92
-
-    (34) expression -> expression LBRACKET . expression RBRACKET
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 112
-
-state 93
-
-    (32) expression -> expression MINUS . expression
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 113
-
-state 94
 
     (29) expression -> expression AND . expression
     (29) expression -> . expression AND expression
@@ -1399,29 +1323,119 @@ state 94
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 114
+    expression                     shift and go to state 108
+    id                             shift and go to state 70
 
-state 95
+state 90
+
+    (11) statement -> IF LPAREN expression RPAREN . statement ELSE statement
+    (10) statement -> . LBRACE statement_star RBRACE
+    (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (12) statement -> . WHILE LPAREN expression RPAREN statement
+    (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
+
+    LBRACE          shift and go to state 53
+    IF              shift and go to state 49
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
+
+    statement                      shift and go to state 109
+    id                             shift and go to state 50
+
+state 91
+
+    (32) expression -> expression MINUS . expression
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 110
+    id                             shift and go to state 70
+
+state 92
+
+    (30) expression -> expression LESS_THAN . expression
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 111
+    id                             shift and go to state 70
+
+state 93
 
     (31) expression -> expression PLUS . expression
     (29) expression -> . expression AND expression
@@ -1431,29 +1445,110 @@ state 95
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 112
+    id                             shift and go to state 70
+
+state 94
+
+    (35) expression -> expression DOT . LENGTH
+    (36) expression -> expression DOT . id LPAREN expression expression_opt RPAREN
+    (48) id -> . ID
+
+    LENGTH          shift and go to state 114
+    ID              shift and go to state 4
+
+    id                             shift and go to state 113
+
+state 95
+
+    (33) expression -> expression TIMES . expression
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
     expression                     shift and go to state 115
+    id                             shift and go to state 70
 
 state 96
+
+    (34) expression -> expression LBRACKET . expression RBRACKET
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 116
+    id                             shift and go to state 70
+
+state 97
 
     (46) expression -> NOT expression .
     (29) expression -> expression . AND expression
@@ -1463,7 +1558,7 @@ state 96
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for LESS_THAN resolved as shift
@@ -1472,17 +1567,17 @@ state 96
   ! shift/reduce conflict for TIMES resolved as shift
   ! shift/reduce conflict for LBRACKET resolved as shift
   ! shift/reduce conflict for DOT resolved as shift
-    RPAREN          reduce using rule 46 (expression -> NOT expression .)
-    RBRACKET        reduce using rule 46 (expression -> NOT expression .)
-    SEMICOLON       reduce using rule 46 (expression -> NOT expression .)
     COMMA           reduce using rule 46 (expression -> NOT expression .)
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    RPAREN          reduce using rule 46 (expression -> NOT expression .)
+    SEMICOLON       reduce using rule 46 (expression -> NOT expression .)
+    RBRACKET        reduce using rule 46 (expression -> NOT expression .)
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
   ! AND             [ reduce using rule 46 (expression -> NOT expression .) ]
   ! LESS_THAN       [ reduce using rule 46 (expression -> NOT expression .) ]
@@ -1493,123 +1588,99 @@ state 96
   ! DOT             [ reduce using rule 46 (expression -> NOT expression .) ]
 
 
-state 97
-
-    (11) statement -> IF LPAREN expression RPAREN . statement ELSE statement
-    (10) statement -> . LBRACE statement_star RBRACE
-    (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (12) statement -> . WHILE LPAREN expression RPAREN statement
-    (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
-
-    LBRACE          shift and go to state 51
-    IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
-
-    statement                      shift and go to state 116
-
 state 98
+
+    (14) statement -> id LET expression SEMICOLON .
+
+    RBRACE          reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    LBRACE          reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    IF              reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    WHILE           reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    SYSTEM_PRINTLN  reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    ID              reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    ELSE            reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+    RETURN          reduce using rule 14 (statement -> id LET expression SEMICOLON .)
+
+
+state 99
+
+    (15) statement -> id LBRACKET expression RBRACKET . LET expression SEMICOLON
+
+    LET             shift and go to state 117
+
+
+state 100
+
+    (13) statement -> SYSTEM_PRINTLN LPAREN expression RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 118
+
+
+state 101
 
     (12) statement -> WHILE LPAREN expression RPAREN . statement
     (10) statement -> . LBRACE statement_star RBRACE
     (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
     (12) statement -> . WHILE LPAREN expression RPAREN statement
     (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
 
-    LBRACE          shift and go to state 51
+    LBRACE          shift and go to state 53
     IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
 
-    statement                      shift and go to state 117
-
-state 99
-
-    (15) statement -> ID LBRACKET expression RBRACKET . LET expression SEMICOLON
-
-    LET             shift and go to state 118
-
-
-state 100
-
-    (14) statement -> ID LET expression SEMICOLON .
-
-    LBRACE          reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    IF              reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    WHILE           reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    SYSTEM_PRINTLN  reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    ID              reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    RETURN          reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    RBRACE          reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-    ELSE            reduce using rule 14 (statement -> ID LET expression SEMICOLON .)
-
-
-state 101
-
-    (27) params_opt -> COMMA type ID params_opt .
-
-    RPAREN          reduce using rule 27 (params_opt -> COMMA type ID params_opt .)
-
+    statement                      shift and go to state 119
+    id                             shift and go to state 50
 
 state 102
 
-    (26) methodbody -> vardeclaration_star . statement_star
-    (17) vardeclaration_star -> vardeclaration_star . vardeclaration
-    (8) statement_star -> . statement_star statement
-    (9) statement_star -> . empty
-    (18) vardeclaration -> . type ID SEMICOLON
-    (48) empty -> .
-    (19) type -> . INT LBRACKET RBRACKET
-    (20) type -> . BOOLEAN
-    (21) type -> . INT
-    (22) type -> . ID
+    (27) params_opt -> COMMA type id params_opt .
 
-  ! shift/reduce conflict for ID resolved as shift
-    LBRACE          reduce using rule 48 (empty -> .)
-    IF              reduce using rule 48 (empty -> .)
-    WHILE           reduce using rule 48 (empty -> .)
-    SYSTEM_PRINTLN  reduce using rule 48 (empty -> .)
-    RETURN          reduce using rule 48 (empty -> .)
-    INT             shift and go to state 23
-    BOOLEAN         shift and go to state 26
-    ID              shift and go to state 24
+    RPAREN          reduce using rule 27 (params_opt -> COMMA type id params_opt .)
 
-  ! ID              [ reduce using rule 48 (empty -> .) ]
-
-    vardeclaration                 shift and go to state 25
-    statement_star                 shift and go to state 119
-    type                           shift and go to state 27
-    empty                          shift and go to state 60
 
 state 103
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody . RETURN expression SEMICOLON RBRACE
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody . RETURN expression SEMICOLON RBRACE
 
     RETURN          shift and go to state 120
 
 
 state 104
 
-    (47) expression -> LPAREN expression RPAREN .
+    (26) methodbody -> vardeclaration_star . statement_star
+    (17) vardeclaration_star -> vardeclaration_star . vardeclaration
+    (8) statement_star -> . statement_star statement
+    (9) statement_star -> . empty
+    (18) vardeclaration -> . type id SEMICOLON
+    (49) empty -> .
+    (19) type -> . INT LBRACKET RBRACKET
+    (20) type -> . BOOLEAN
+    (21) type -> . INT
+    (22) type -> . id
+    (48) id -> . ID
 
-    AND             reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    LESS_THAN       reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    TIMES           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    LBRACKET        reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    DOT             reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    RBRACKET        reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 47 (expression -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+  ! shift/reduce conflict for ID resolved as shift
+    LBRACE          reduce using rule 49 (empty -> .)
+    IF              reduce using rule 49 (empty -> .)
+    WHILE           reduce using rule 49 (empty -> .)
+    SYSTEM_PRINTLN  reduce using rule 49 (empty -> .)
+    RETURN          reduce using rule 49 (empty -> .)
+    INT             shift and go to state 27
+    BOOLEAN         shift and go to state 24
+    ID              shift and go to state 4
 
+  ! ID              [ reduce using rule 49 (empty -> .) ]
+
+    vardeclaration                 shift and go to state 26
+    id                             shift and go to state 28
+    type                           shift and go to state 29
+    statement_star                 shift and go to state 121
+    empty                          shift and go to state 63
 
 state 105
 
@@ -1621,202 +1692,55 @@ state 105
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 121
+    expression                     shift and go to state 122
+    id                             shift and go to state 70
 
 state 106
 
-    (45) expression -> NEW ID LPAREN . RPAREN
+    (45) expression -> NEW id LPAREN . RPAREN
 
-    RPAREN          shift and go to state 122
+    RPAREN          shift and go to state 123
 
 
 state 107
 
-    (13) statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .
+    (47) expression -> LPAREN expression RPAREN .
 
-    LBRACE          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    IF              reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    WHILE           reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    SYSTEM_PRINTLN  reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    ID              reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    RETURN          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    RBRACE          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
-    ELSE            reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    AND             reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    LESS_THAN       reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    LBRACKET        reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    DOT             reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 47 (expression -> LPAREN expression RPAREN .)
+    RBRACKET        reduce using rule 47 (expression -> LPAREN expression RPAREN .)
 
 
 state 108
-
-    (30) expression -> expression LESS_THAN expression .
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for LESS_THAN resolved as shift
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for LBRACKET resolved as shift
-  ! shift/reduce conflict for DOT resolved as shift
-    RPAREN          reduce using rule 30 (expression -> expression LESS_THAN expression .)
-    RBRACKET        reduce using rule 30 (expression -> expression LESS_THAN expression .)
-    SEMICOLON       reduce using rule 30 (expression -> expression LESS_THAN expression .)
-    COMMA           reduce using rule 30 (expression -> expression LESS_THAN expression .)
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-  ! AND             [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! LESS_THAN       [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! PLUS            [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! MINUS           [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! TIMES           [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! LBRACKET        [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-  ! DOT             [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
-
-
-state 109
-
-    (35) expression -> expression DOT LENGTH .
-
-    AND             reduce using rule 35 (expression -> expression DOT LENGTH .)
-    LESS_THAN       reduce using rule 35 (expression -> expression DOT LENGTH .)
-    PLUS            reduce using rule 35 (expression -> expression DOT LENGTH .)
-    MINUS           reduce using rule 35 (expression -> expression DOT LENGTH .)
-    TIMES           reduce using rule 35 (expression -> expression DOT LENGTH .)
-    LBRACKET        reduce using rule 35 (expression -> expression DOT LENGTH .)
-    DOT             reduce using rule 35 (expression -> expression DOT LENGTH .)
-    RPAREN          reduce using rule 35 (expression -> expression DOT LENGTH .)
-    RBRACKET        reduce using rule 35 (expression -> expression DOT LENGTH .)
-    SEMICOLON       reduce using rule 35 (expression -> expression DOT LENGTH .)
-    COMMA           reduce using rule 35 (expression -> expression DOT LENGTH .)
-
-
-state 110
-
-    (36) expression -> expression DOT ID . LPAREN expression expression_opt RPAREN
-
-    LPAREN          shift and go to state 123
-
-
-state 111
-
-    (33) expression -> expression TIMES expression .
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    AND             reduce using rule 33 (expression -> expression TIMES expression .)
-    LESS_THAN       reduce using rule 33 (expression -> expression TIMES expression .)
-    PLUS            reduce using rule 33 (expression -> expression TIMES expression .)
-    MINUS           reduce using rule 33 (expression -> expression TIMES expression .)
-    TIMES           reduce using rule 33 (expression -> expression TIMES expression .)
-    LBRACKET        reduce using rule 33 (expression -> expression TIMES expression .)
-    DOT             reduce using rule 33 (expression -> expression TIMES expression .)
-    RPAREN          reduce using rule 33 (expression -> expression TIMES expression .)
-    RBRACKET        reduce using rule 33 (expression -> expression TIMES expression .)
-    SEMICOLON       reduce using rule 33 (expression -> expression TIMES expression .)
-    COMMA           reduce using rule 33 (expression -> expression TIMES expression .)
-
-  ! AND             [ shift and go to state 94 ]
-  ! LESS_THAN       [ shift and go to state 89 ]
-  ! PLUS            [ shift and go to state 95 ]
-  ! MINUS           [ shift and go to state 93 ]
-  ! TIMES           [ shift and go to state 91 ]
-  ! LBRACKET        [ shift and go to state 92 ]
-  ! DOT             [ shift and go to state 90 ]
-
-
-state 112
-
-    (34) expression -> expression LBRACKET expression . RBRACKET
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    RBRACKET        shift and go to state 124
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-
-state 113
-
-    (32) expression -> expression MINUS expression .
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    AND             reduce using rule 32 (expression -> expression MINUS expression .)
-    LESS_THAN       reduce using rule 32 (expression -> expression MINUS expression .)
-    PLUS            reduce using rule 32 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 32 (expression -> expression MINUS expression .)
-    LBRACKET        reduce using rule 32 (expression -> expression MINUS expression .)
-    DOT             reduce using rule 32 (expression -> expression MINUS expression .)
-    RPAREN          reduce using rule 32 (expression -> expression MINUS expression .)
-    RBRACKET        reduce using rule 32 (expression -> expression MINUS expression .)
-    SEMICOLON       reduce using rule 32 (expression -> expression MINUS expression .)
-    COMMA           reduce using rule 32 (expression -> expression MINUS expression .)
-    TIMES           shift and go to state 91
-
-  ! TIMES           [ reduce using rule 32 (expression -> expression MINUS expression .) ]
-  ! AND             [ shift and go to state 94 ]
-  ! LESS_THAN       [ shift and go to state 89 ]
-  ! PLUS            [ shift and go to state 95 ]
-  ! MINUS           [ shift and go to state 93 ]
-  ! LBRACKET        [ shift and go to state 92 ]
-  ! DOT             [ shift and go to state 90 ]
-
-
-state 114
 
     (29) expression -> expression AND expression .
     (29) expression -> expression . AND expression
@@ -1826,7 +1750,7 @@ state 114
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for LESS_THAN resolved as shift
@@ -1835,17 +1759,17 @@ state 114
   ! shift/reduce conflict for TIMES resolved as shift
   ! shift/reduce conflict for LBRACKET resolved as shift
   ! shift/reduce conflict for DOT resolved as shift
-    RPAREN          reduce using rule 29 (expression -> expression AND expression .)
-    RBRACKET        reduce using rule 29 (expression -> expression AND expression .)
-    SEMICOLON       reduce using rule 29 (expression -> expression AND expression .)
     COMMA           reduce using rule 29 (expression -> expression AND expression .)
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    RPAREN          reduce using rule 29 (expression -> expression AND expression .)
+    SEMICOLON       reduce using rule 29 (expression -> expression AND expression .)
+    RBRACKET        reduce using rule 29 (expression -> expression AND expression .)
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
   ! AND             [ reduce using rule 29 (expression -> expression AND expression .) ]
   ! LESS_THAN       [ reduce using rule 29 (expression -> expression AND expression .) ]
@@ -1856,7 +1780,87 @@ state 114
   ! DOT             [ reduce using rule 29 (expression -> expression AND expression .) ]
 
 
-state 115
+state 109
+
+    (11) statement -> IF LPAREN expression RPAREN statement . ELSE statement
+
+    ELSE            shift and go to state 124
+
+
+state 110
+
+    (32) expression -> expression MINUS expression .
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+    AND             reduce using rule 32 (expression -> expression MINUS expression .)
+    LESS_THAN       reduce using rule 32 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 32 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 32 (expression -> expression MINUS expression .)
+    LBRACKET        reduce using rule 32 (expression -> expression MINUS expression .)
+    DOT             reduce using rule 32 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 32 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 32 (expression -> expression MINUS expression .)
+    SEMICOLON       reduce using rule 32 (expression -> expression MINUS expression .)
+    RBRACKET        reduce using rule 32 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 95
+
+  ! TIMES           [ reduce using rule 32 (expression -> expression MINUS expression .) ]
+  ! AND             [ shift and go to state 89 ]
+  ! LESS_THAN       [ shift and go to state 92 ]
+  ! PLUS            [ shift and go to state 93 ]
+  ! MINUS           [ shift and go to state 91 ]
+  ! LBRACKET        [ shift and go to state 96 ]
+  ! DOT             [ shift and go to state 94 ]
+
+
+state 111
+
+    (30) expression -> expression LESS_THAN expression .
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for LESS_THAN resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for LBRACKET resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+    COMMA           reduce using rule 30 (expression -> expression LESS_THAN expression .)
+    RPAREN          reduce using rule 30 (expression -> expression LESS_THAN expression .)
+    SEMICOLON       reduce using rule 30 (expression -> expression LESS_THAN expression .)
+    RBRACKET        reduce using rule 30 (expression -> expression LESS_THAN expression .)
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+
+  ! AND             [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! LESS_THAN       [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! PLUS            [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! MINUS           [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! TIMES           [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! LBRACKET        [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+  ! DOT             [ reduce using rule 30 (expression -> expression LESS_THAN expression .) ]
+
+
+state 112
 
     (31) expression -> expression PLUS expression .
     (29) expression -> expression . AND expression
@@ -1866,7 +1870,7 @@ state 115
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
     AND             reduce using rule 31 (expression -> expression PLUS expression .)
     LESS_THAN       reduce using rule 31 (expression -> expression PLUS expression .)
@@ -1874,45 +1878,103 @@ state 115
     MINUS           reduce using rule 31 (expression -> expression PLUS expression .)
     LBRACKET        reduce using rule 31 (expression -> expression PLUS expression .)
     DOT             reduce using rule 31 (expression -> expression PLUS expression .)
-    RPAREN          reduce using rule 31 (expression -> expression PLUS expression .)
-    RBRACKET        reduce using rule 31 (expression -> expression PLUS expression .)
-    SEMICOLON       reduce using rule 31 (expression -> expression PLUS expression .)
     COMMA           reduce using rule 31 (expression -> expression PLUS expression .)
-    TIMES           shift and go to state 91
+    RPAREN          reduce using rule 31 (expression -> expression PLUS expression .)
+    SEMICOLON       reduce using rule 31 (expression -> expression PLUS expression .)
+    RBRACKET        reduce using rule 31 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 95
 
   ! TIMES           [ reduce using rule 31 (expression -> expression PLUS expression .) ]
-  ! AND             [ shift and go to state 94 ]
-  ! LESS_THAN       [ shift and go to state 89 ]
-  ! PLUS            [ shift and go to state 95 ]
-  ! MINUS           [ shift and go to state 93 ]
-  ! LBRACKET        [ shift and go to state 92 ]
-  ! DOT             [ shift and go to state 90 ]
+  ! AND             [ shift and go to state 89 ]
+  ! LESS_THAN       [ shift and go to state 92 ]
+  ! PLUS            [ shift and go to state 93 ]
+  ! MINUS           [ shift and go to state 91 ]
+  ! LBRACKET        [ shift and go to state 96 ]
+  ! DOT             [ shift and go to state 94 ]
+
+
+state 113
+
+    (36) expression -> expression DOT id . LPAREN expression expression_opt RPAREN
+
+    LPAREN          shift and go to state 125
+
+
+state 114
+
+    (35) expression -> expression DOT LENGTH .
+
+    AND             reduce using rule 35 (expression -> expression DOT LENGTH .)
+    LESS_THAN       reduce using rule 35 (expression -> expression DOT LENGTH .)
+    PLUS            reduce using rule 35 (expression -> expression DOT LENGTH .)
+    MINUS           reduce using rule 35 (expression -> expression DOT LENGTH .)
+    TIMES           reduce using rule 35 (expression -> expression DOT LENGTH .)
+    LBRACKET        reduce using rule 35 (expression -> expression DOT LENGTH .)
+    DOT             reduce using rule 35 (expression -> expression DOT LENGTH .)
+    COMMA           reduce using rule 35 (expression -> expression DOT LENGTH .)
+    RPAREN          reduce using rule 35 (expression -> expression DOT LENGTH .)
+    SEMICOLON       reduce using rule 35 (expression -> expression DOT LENGTH .)
+    RBRACKET        reduce using rule 35 (expression -> expression DOT LENGTH .)
+
+
+state 115
+
+    (33) expression -> expression TIMES expression .
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+    AND             reduce using rule 33 (expression -> expression TIMES expression .)
+    LESS_THAN       reduce using rule 33 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 33 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 33 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 33 (expression -> expression TIMES expression .)
+    LBRACKET        reduce using rule 33 (expression -> expression TIMES expression .)
+    DOT             reduce using rule 33 (expression -> expression TIMES expression .)
+    COMMA           reduce using rule 33 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 33 (expression -> expression TIMES expression .)
+    SEMICOLON       reduce using rule 33 (expression -> expression TIMES expression .)
+    RBRACKET        reduce using rule 33 (expression -> expression TIMES expression .)
+
+  ! AND             [ shift and go to state 89 ]
+  ! LESS_THAN       [ shift and go to state 92 ]
+  ! PLUS            [ shift and go to state 93 ]
+  ! MINUS           [ shift and go to state 91 ]
+  ! TIMES           [ shift and go to state 95 ]
+  ! LBRACKET        [ shift and go to state 96 ]
+  ! DOT             [ shift and go to state 94 ]
 
 
 state 116
 
-    (11) statement -> IF LPAREN expression RPAREN statement . ELSE statement
+    (34) expression -> expression LBRACKET expression . RBRACKET
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    ELSE            shift and go to state 125
+    RBRACKET        shift and go to state 126
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
 
 state 117
 
-    (12) statement -> WHILE LPAREN expression RPAREN statement .
-
-    LBRACE          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    IF              reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    WHILE           reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    SYSTEM_PRINTLN  reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    ID              reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    RETURN          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    RBRACE          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-    ELSE            reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
-
-
-state 118
-
-    (15) statement -> ID LBRACKET expression RBRACKET LET . expression SEMICOLON
+    (15) statement -> id LBRACKET expression RBRACKET LET . expression SEMICOLON
     (29) expression -> . expression AND expression
     (30) expression -> . expression LESS_THAN expression
     (31) expression -> . expression PLUS expression
@@ -1920,29 +1982,93 @@ state 118
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 126
+    expression                     shift and go to state 127
+    id                             shift and go to state 70
+
+state 118
+
+    (13) statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    LBRACE          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    IF              reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    WHILE           reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    SYSTEM_PRINTLN  reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    ID              reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    ELSE            reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+    RETURN          reduce using rule 13 (statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON .)
+
 
 state 119
+
+    (12) statement -> WHILE LPAREN expression RPAREN statement .
+
+    RBRACE          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    LBRACE          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    IF              reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    WHILE           reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    SYSTEM_PRINTLN  reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    ID              reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    ELSE            reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+    RETURN          reduce using rule 12 (statement -> WHILE LPAREN expression RPAREN statement .)
+
+
+state 120
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN . expression SEMICOLON RBRACE
+    (29) expression -> . expression AND expression
+    (30) expression -> . expression LESS_THAN expression
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression TIMES expression
+    (34) expression -> . expression LBRACKET expression RBRACKET
+    (35) expression -> . expression DOT LENGTH
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
+    (39) expression -> . LIT_INT
+    (40) expression -> . TRUE
+    (41) expression -> . FALSE
+    (42) expression -> . id
+    (43) expression -> . THIS
+    (44) expression -> . NEW INT LBRACKET expression RBRACKET
+    (45) expression -> . NEW id LPAREN RPAREN
+    (46) expression -> . NOT expression
+    (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
+
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
+
+    expression                     shift and go to state 128
+    id                             shift and go to state 70
+
+state 121
 
     (26) methodbody -> vardeclaration_star statement_star .
     (8) statement_star -> statement_star . statement
@@ -1950,51 +2076,21 @@ state 119
     (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
     (12) statement -> . WHILE LPAREN expression RPAREN statement
     (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
 
     RETURN          reduce using rule 26 (methodbody -> vardeclaration_star statement_star .)
-    LBRACE          shift and go to state 51
+    LBRACE          shift and go to state 53
     IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
 
-    statement                      shift and go to state 79
+    statement                      shift and go to state 82
+    id                             shift and go to state 50
 
-state 120
-
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN . expression SEMICOLON RBRACE
-    (29) expression -> . expression AND expression
-    (30) expression -> . expression LESS_THAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression TIMES expression
-    (34) expression -> . expression LBRACKET expression RBRACKET
-    (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
-    (39) expression -> . LIT_INT
-    (40) expression -> . TRUE
-    (41) expression -> . FALSE
-    (42) expression -> . ID
-    (43) expression -> . THIS
-    (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
-    (46) expression -> . NOT expression
-    (47) expression -> . LPAREN expression RPAREN
-
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
-
-    expression                     shift and go to state 127
-
-state 121
+state 122
 
     (44) expression -> NEW INT LBRACKET expression . RBRACKET
     (29) expression -> expression . AND expression
@@ -2004,38 +2100,58 @@ state 121
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
-    RBRACKET        shift and go to state 128
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-
-
-state 122
-
-    (45) expression -> NEW ID LPAREN RPAREN .
-
-    AND             reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    LESS_THAN       reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    PLUS            reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    MINUS           reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    TIMES           reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    LBRACKET        reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    DOT             reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    RPAREN          reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    RBRACKET        reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    SEMICOLON       reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
-    COMMA           reduce using rule 45 (expression -> NEW ID LPAREN RPAREN .)
+    RBRACKET        shift and go to state 129
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
 
 state 123
 
-    (36) expression -> expression DOT ID LPAREN . expression expression_opt RPAREN
+    (45) expression -> NEW id LPAREN RPAREN .
+
+    AND             reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    LESS_THAN       reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    PLUS            reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    MINUS           reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    TIMES           reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    LBRACKET        reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    DOT             reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    COMMA           reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    RPAREN          reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    SEMICOLON       reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+    RBRACKET        reduce using rule 45 (expression -> NEW id LPAREN RPAREN .)
+
+
+state 124
+
+    (11) statement -> IF LPAREN expression RPAREN statement ELSE . statement
+    (10) statement -> . LBRACE statement_star RBRACE
+    (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (12) statement -> . WHILE LPAREN expression RPAREN statement
+    (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
+    (14) statement -> . id LET expression SEMICOLON
+    (15) statement -> . id LBRACKET expression RBRACKET LET expression SEMICOLON
+    (48) id -> . ID
+
+    LBRACE          shift and go to state 53
+    IF              shift and go to state 49
+    WHILE           shift and go to state 54
+    SYSTEM_PRINTLN  shift and go to state 52
+    ID              shift and go to state 4
+
+    statement                      shift and go to state 130
+    id                             shift and go to state 50
+
+state 125
+
+    (36) expression -> expression DOT id LPAREN . expression expression_opt RPAREN
     (29) expression -> . expression AND expression
     (30) expression -> . expression LESS_THAN expression
     (31) expression -> . expression PLUS expression
@@ -2043,29 +2159,31 @@ state 123
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 129
+    expression                     shift and go to state 131
+    id                             shift and go to state 70
 
-state 124
+state 126
 
     (34) expression -> expression LBRACKET expression RBRACKET .
 
@@ -2076,55 +2194,15 @@ state 124
     TIMES           reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
     LBRACKET        reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
     DOT             reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
-    RPAREN          reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
-    RBRACKET        reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
-    SEMICOLON       reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
     COMMA           reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
-
-
-state 125
-
-    (11) statement -> IF LPAREN expression RPAREN statement ELSE . statement
-    (10) statement -> . LBRACE statement_star RBRACE
-    (11) statement -> . IF LPAREN expression RPAREN statement ELSE statement
-    (12) statement -> . WHILE LPAREN expression RPAREN statement
-    (13) statement -> . SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON
-    (14) statement -> . ID LET expression SEMICOLON
-    (15) statement -> . ID LBRACKET expression RBRACKET LET expression SEMICOLON
-
-    LBRACE          shift and go to state 51
-    IF              shift and go to state 49
-    WHILE           shift and go to state 50
-    SYSTEM_PRINTLN  shift and go to state 48
-    ID              shift and go to state 52
-
-    statement                      shift and go to state 130
-
-state 126
-
-    (15) statement -> ID LBRACKET expression RBRACKET LET expression . SEMICOLON
-    (29) expression -> expression . AND expression
-    (30) expression -> expression . LESS_THAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . TIMES expression
-    (34) expression -> expression . LBRACKET expression RBRACKET
-    (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
-
-    SEMICOLON       shift and go to state 131
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    RPAREN          reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
+    SEMICOLON       reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 34 (expression -> expression LBRACKET expression RBRACKET .)
 
 
 state 127
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression . SEMICOLON RBRACE
+    (15) statement -> id LBRACKET expression RBRACKET LET expression . SEMICOLON
     (29) expression -> expression . AND expression
     (30) expression -> expression . LESS_THAN expression
     (31) expression -> expression . PLUS expression
@@ -2132,19 +2210,41 @@ state 127
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
 
     SEMICOLON       shift and go to state 132
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
 
 
 state 128
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression . SEMICOLON RBRACE
+    (29) expression -> expression . AND expression
+    (30) expression -> expression . LESS_THAN expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . TIMES expression
+    (34) expression -> expression . LBRACKET expression RBRACKET
+    (35) expression -> expression . DOT LENGTH
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
+
+    SEMICOLON       shift and go to state 133
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+
+
+state 129
 
     (44) expression -> NEW INT LBRACKET expression RBRACKET .
 
@@ -2155,15 +2255,29 @@ state 128
     TIMES           reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
     LBRACKET        reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
     DOT             reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
-    RPAREN          reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
-    RBRACKET        reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
-    SEMICOLON       reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
     COMMA           reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
+    RPAREN          reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
+    SEMICOLON       reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 44 (expression -> NEW INT LBRACKET expression RBRACKET .)
 
 
-state 129
+state 130
 
-    (36) expression -> expression DOT ID LPAREN expression . expression_opt RPAREN
+    (11) statement -> IF LPAREN expression RPAREN statement ELSE statement .
+
+    RBRACE          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    LBRACE          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    IF              reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    WHILE           reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    SYSTEM_PRINTLN  reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    ID              reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    ELSE            reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    RETURN          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+
+
+state 131
+
+    (36) expression -> expression DOT id LPAREN expression . expression_opt RPAREN
     (29) expression -> expression . AND expression
     (30) expression -> expression . LESS_THAN expression
     (31) expression -> expression . PLUS expression
@@ -2171,60 +2285,53 @@ state 129
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
     (37) expression_opt -> . COMMA expression expression_opt
     (38) expression_opt -> . empty
-    (48) empty -> .
+    (49) empty -> .
 
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-    COMMA           shift and go to state 133
-    RPAREN          reduce using rule 48 (empty -> .)
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+    COMMA           shift and go to state 135
+    RPAREN          reduce using rule 49 (empty -> .)
 
-    expression_opt                 shift and go to state 134
-    empty                          shift and go to state 135
-
-state 130
-
-    (11) statement -> IF LPAREN expression RPAREN statement ELSE statement .
-
-    LBRACE          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    IF              reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    WHILE           reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    SYSTEM_PRINTLN  reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    ID              reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    RETURN          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    RBRACE          reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-    ELSE            reduce using rule 11 (statement -> IF LPAREN expression RPAREN statement ELSE statement .)
-
-
-state 131
-
-    (15) statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .
-
-    LBRACE          reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    IF              reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    WHILE           reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    SYSTEM_PRINTLN  reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    ID              reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    RETURN          reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    RBRACE          reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-    ELSE            reduce using rule 15 (statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON .)
-
+    empty                          shift and go to state 134
+    expression_opt                 shift and go to state 136
 
 state 132
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON . RBRACE
+    (15) statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .
 
-    RBRACE          shift and go to state 136
+    RBRACE          reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    LBRACE          reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    IF              reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    WHILE           reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    SYSTEM_PRINTLN  reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    ID              reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    ELSE            reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
+    RETURN          reduce using rule 15 (statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON .)
 
 
 state 133
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON . RBRACE
+
+    RBRACE          shift and go to state 137
+
+
+state 134
+
+    (38) expression_opt -> empty .
+
+    RPAREN          reduce using rule 38 (expression_opt -> empty .)
+
+
+state 135
 
     (37) expression_opt -> COMMA . expression expression_opt
     (29) expression -> . expression AND expression
@@ -2234,51 +2341,46 @@ state 133
     (33) expression -> . expression TIMES expression
     (34) expression -> . expression LBRACKET expression RBRACKET
     (35) expression -> . expression DOT LENGTH
-    (36) expression -> . expression DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> . expression DOT id LPAREN expression expression_opt RPAREN
     (39) expression -> . LIT_INT
     (40) expression -> . TRUE
     (41) expression -> . FALSE
-    (42) expression -> . ID
+    (42) expression -> . id
     (43) expression -> . THIS
     (44) expression -> . NEW INT LBRACKET expression RBRACKET
-    (45) expression -> . NEW ID LPAREN RPAREN
+    (45) expression -> . NEW id LPAREN RPAREN
     (46) expression -> . NOT expression
     (47) expression -> . LPAREN expression RPAREN
+    (48) id -> . ID
 
-    LIT_INT         shift and go to state 74
-    TRUE            shift and go to state 68
-    FALSE           shift and go to state 69
-    ID              shift and go to state 71
-    THIS            shift and go to state 72
-    NEW             shift and go to state 70
-    NOT             shift and go to state 75
-    LPAREN          shift and go to state 67
+    LIT_INT         shift and go to state 69
+    TRUE            shift and go to state 72
+    FALSE           shift and go to state 74
+    THIS            shift and go to state 71
+    NEW             shift and go to state 68
+    NOT             shift and go to state 76
+    LPAREN          shift and go to state 73
+    ID              shift and go to state 4
 
-    expression                     shift and go to state 137
-
-state 134
-
-    (36) expression -> expression DOT ID LPAREN expression expression_opt . RPAREN
-
-    RPAREN          shift and go to state 138
-
-
-state 135
-
-    (38) expression_opt -> empty .
-
-    RPAREN          reduce using rule 38 (expression_opt -> empty .)
-
+    expression                     shift and go to state 138
+    id                             shift and go to state 70
 
 state 136
 
-    (25) methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .
+    (36) expression -> expression DOT id LPAREN expression expression_opt . RPAREN
 
-    RBRACE          reduce using rule 25 (methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .)
-    PUBLIC          reduce using rule 25 (methoddeclaration -> PUBLIC type ID LPAREN type ID params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .)
+    RPAREN          shift and go to state 139
 
 
 state 137
+
+    (25) methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .
+
+    RBRACE          reduce using rule 25 (methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .)
+    PUBLIC          reduce using rule 25 (methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE .)
+
+
+state 138
 
     (37) expression_opt -> COMMA expression . expression_opt
     (29) expression -> expression . AND expression
@@ -2288,42 +2390,42 @@ state 137
     (33) expression -> expression . TIMES expression
     (34) expression -> expression . LBRACKET expression RBRACKET
     (35) expression -> expression . DOT LENGTH
-    (36) expression -> expression . DOT ID LPAREN expression expression_opt RPAREN
+    (36) expression -> expression . DOT id LPAREN expression expression_opt RPAREN
     (37) expression_opt -> . COMMA expression expression_opt
     (38) expression_opt -> . empty
-    (48) empty -> .
+    (49) empty -> .
 
-    AND             shift and go to state 94
-    LESS_THAN       shift and go to state 89
-    PLUS            shift and go to state 95
-    MINUS           shift and go to state 93
-    TIMES           shift and go to state 91
-    LBRACKET        shift and go to state 92
-    DOT             shift and go to state 90
-    COMMA           shift and go to state 133
-    RPAREN          reduce using rule 48 (empty -> .)
+    AND             shift and go to state 89
+    LESS_THAN       shift and go to state 92
+    PLUS            shift and go to state 93
+    MINUS           shift and go to state 91
+    TIMES           shift and go to state 95
+    LBRACKET        shift and go to state 96
+    DOT             shift and go to state 94
+    COMMA           shift and go to state 135
+    RPAREN          reduce using rule 49 (empty -> .)
 
-    expression_opt                 shift and go to state 139
-    empty                          shift and go to state 135
-
-state 138
-
-    (36) expression -> expression DOT ID LPAREN expression expression_opt RPAREN .
-
-    AND             reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    LESS_THAN       reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    PLUS            reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    MINUS           reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    TIMES           reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    LBRACKET        reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    DOT             reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    RPAREN          reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    RBRACKET        reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    SEMICOLON       reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-    COMMA           reduce using rule 36 (expression -> expression DOT ID LPAREN expression expression_opt RPAREN .)
-
+    empty                          shift and go to state 134
+    expression_opt                 shift and go to state 140
 
 state 139
+
+    (36) expression -> expression DOT id LPAREN expression expression_opt RPAREN .
+
+    AND             reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    LESS_THAN       reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    PLUS            reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    MINUS           reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    TIMES           reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    LBRACKET        reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    DOT             reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    COMMA           reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    RPAREN          reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    SEMICOLON       reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+    RBRACKET        reduce using rule 36 (expression -> expression DOT id LPAREN expression expression_opt RPAREN .)
+
+
+state 140
 
     (37) expression_opt -> COMMA expression expression_opt .
 
@@ -2332,14 +2434,14 @@ state 139
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for AND in state 96 resolved as shift
-WARNING: shift/reduce conflict for LESS_THAN in state 96 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 96 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 96 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 96 resolved as shift
-WARNING: shift/reduce conflict for LBRACKET in state 96 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 96 resolved as shift
-WARNING: shift/reduce conflict for ID in state 102 resolved as shift
+WARNING: shift/reduce conflict for AND in state 97 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 97 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 97 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 97 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 97 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 97 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 97 resolved as shift
+WARNING: shift/reduce conflict for ID in state 104 resolved as shift
 WARNING: shift/reduce conflict for AND in state 108 resolved as shift
 WARNING: shift/reduce conflict for LESS_THAN in state 108 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 108 resolved as shift
@@ -2347,10 +2449,10 @@ WARNING: shift/reduce conflict for MINUS in state 108 resolved as shift
 WARNING: shift/reduce conflict for TIMES in state 108 resolved as shift
 WARNING: shift/reduce conflict for LBRACKET in state 108 resolved as shift
 WARNING: shift/reduce conflict for DOT in state 108 resolved as shift
-WARNING: shift/reduce conflict for AND in state 114 resolved as shift
-WARNING: shift/reduce conflict for LESS_THAN in state 114 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 114 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 114 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 114 resolved as shift
-WARNING: shift/reduce conflict for LBRACKET in state 114 resolved as shift
-WARNING: shift/reduce conflict for DOT in state 114 resolved as shift
+WARNING: shift/reduce conflict for AND in state 111 resolved as shift
+WARNING: shift/reduce conflict for LESS_THAN in state 111 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 111 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 111 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 111 resolved as shift
+WARNING: shift/reduce conflict for LBRACKET in state 111 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 111 resolved as shift
