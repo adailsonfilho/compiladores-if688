@@ -23,60 +23,69 @@ class MiniJavaLexer(object):
 		'false':'FALSE',
 		'true': 'TRUE',
 		'this':'THIS',
-		'new':'NEW',
-		'Syste.out.println' : 'SYSTEM_PRINTLN'
+		'new':'NEW'
 	}
 
 	_tokens = [
-		# 'eof',
-		'LENGTH',
-		'WHITESPACE',
-		'BLOCK_COMMENT',
-		'LINE_COMMENT',
-		'ID',
-		'LIT_INT',
-		# 'LIT_FLOAT',
-		#Bool OPs
-		# 'OR',
-		'AND',
-		# 'EQUAL',	
-		# 'DIFFERENT',
-		'LESS_THAN',
-		# 'LESS_THAN_OR_EQUAL',
-		# 'GREATER_THEN',
-		# 'GREATER_THEN_OR_EQUAL',
-		'NOT',
-		#Aritimetic OPs
-		'PLUS',
-		'MINUS',
-		'MULTIPLY',
-		# 'DIVIDE',
-		# 'MOD',
-		#BOUNDARY
-		'LPAREN',
-		'RPAREN',
-		'LBRACE',
-		'RBRACE',
-		'LBRACKET',
-		'RBRACKET',
-		'SEMICOLON',
-		'DOT',
-		'COMMA',
-		'LET'
-		] + list(reserved.values())
+	# 'eof',
+	'SYSTEM_PRINTLN',
+	'LENGTH',
+	'WHITESPACE',
+	'BLOCK_COMMENT',
+	'LINE_COMMENT',
+	'ID',
+	'LIT_INT',
+	'AND',
+	'LESS_THAN',
+	'NOT',
+	'PLUS',
+	'MINUS',
+	'TIMES',
+	'LPAREN',
+	'RPAREN',
+	'LBRACE',
+	'RBRACE',
+	'LBRACKET',
+	'RBRACKET',
+	'SEMICOLON',
+	'DOT',
+	'COMMA',
+	'LET'
+	# 'RAW_STRING'
+	] + list(reserved.values())
 
 	#The parser input for the variable called 'tokens must be a tuple
 	tokens = tuple(_tokens)
 
+	##########
+	# IGNORE #
+	##########
+
 	#- Whitespace: espaços em branco, quebra de linha, tabulação e carriage return;
-	def t_WHITESPACE(self,t):
+	def t_ignore_WHITESPACE(self,t):
 		r'\s'
 		pass # No return value. Token discarded
 
 	#- Comentários: qualquer texto entre /* e */;
-	def t_BLOCK_COMMENT(self, t):
+	def t_ignore_BLOCK_COMMENT(self, t):
 		r'(/\*(.|\n)*?\*/)'
 		pass # No return value. Token discarded
+
+	def t_ignore_LINE_COMMENT(self, t):
+		r'//.*'
+		pass # No return value. Token discarded
+
+	  # A string containing ignored characters (spaces and tabs)
+	t_ignore  = ' \t'
+
+
+	###################
+	# Tokens functions #
+	###################
+
+	def t_SYSTEM_PRINTLN(self,t):
+		r'System\.out\.println'		
+		return t
 
 	# Palavras-chave e operadores: class, public, extends, static, void, int boolean, void, while, if, else, return, ||, &&, ==, !=, <, <=, >, >=, +, -, *, /, %, !, false, true, this, new;
 	# Described at the begin: reserved
@@ -93,13 +102,6 @@ class MiniJavaLexer(object):
 	t_DOT = r'\.'
 	t_COMMA = r','
 	t_LET = r'='
-
-	  # A string containing ignored characters (spaces and tabs)
-	t_ignore  = ' \t'
-
-	def t_LINE_COMMENT(self, t):
-		r'(//.*?)'
-		pass # No return value. Token discarded
 
 	# def t_BOUNDARY(self, t):
 	# 	"BOUNDARY: LPAREN | RPAREN | LBRACE | RBRACE | LBRACKET | RBRACKET"
@@ -129,45 +131,47 @@ class MiniJavaLexer(object):
 	  print("Illegal character '%s'" % t.value[0])
 	  t.lexer.skip(1)
 
-	# # EOF handling rule
-	# def t_eof(self, t):
-	#     # Get more input (Example)
-	#     if not t:
-	#     	return None
-	#     else:
-	#     	pass
+	############
+	# Bool OPs #
+	############
 
-	#Bool OPs
 	# t_OR = r'\|\|'
 	t_AND = r'&&'
+	t_LESS_THAN = r'<'
+	t_NOT = r'!'
 	# t_EQUAL = r'=='
 	# t_DIFFERENT = r'!='
-	t_LESS_THAN = r'<'
 	# t_LESS_THAN_OR_EQUAL = r'<='
 	# t_GREATER_THEN = r'>'
 	# t_GREATER_THEN_OR_EQUAL = r'>='
-	t_NOT = r'!'
-	#Aritimetic OPs
+	
+	##################
+	# Aritimetic OPs #
+	##################
+
 	t_PLUS = r'\+'
-	t_MINUS = r'-'
-	t_MULTIPLY = r'\*'
+	t_MINUS = '-'
+	t_TIMES = r'\*'
 	# t_DIVIDE = r'/'
 	# t_MOD = r'%'
 
+	######################
 	## TEST WITH INPUTS ##
+	######################
+	
 	# Build the lexer
 
 	def build(self,**kwargs):
 		self.lexer = lex.lex(module=self,**kwargs)
 	
-	# Test it output
-	def test(self,data):
-		self.lexer.input(data)
-		while True:
-			 tok = self.lexer.token()
-			 if not tok: 
-				 break
-			 print(tok)
+	# # Test it output
+	# def test(self,data):
+	# 	self.lexer.input(data)
+	# 	while True:
+	# 		 tok = self.lexer.token()
+	# 		 if not tok: 
+	# 			 break
+	# 		 print(tok)
 
 	def token(self):
 		return self.lexer.token()

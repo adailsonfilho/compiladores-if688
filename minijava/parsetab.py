@@ -5,9 +5,9 @@ _tabversion = '3.5'
 
 _lr_method = 'LALR'
 
-_lr_signature = '0EA87934D7783461CE6AD550D18046DD'
+_lr_signature = '8D435F4FB1195DF95677AFA8C5F8751B'
     
-_lr_action_items = {'RBRACKET':([4,35,37,69,70,71,72,74,78,97,107,108,110,111,112,114,115,116,122,123,126,129,139,],[-48,39,41,-39,-42,-43,-40,-41,99,-46,-47,-29,-32,-30,-31,-35,-33,126,129,-45,-34,-44,-36,]),'AND':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,89,89,89,89,89,89,89,-47,89,-32,89,-31,-35,-33,89,89,-45,-34,89,89,-44,89,89,-36,]),'CLASS':([0,2,6,7,9,34,79,],[1,-49,10,-4,-3,-5,-2,]),'NOT':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,]),'EXTENDS':([4,12,],[-48,14,]),'BOOLEAN':([19,21,22,26,33,40,44,55,85,104,],[-49,24,-16,-17,24,-18,24,24,-49,24,]),'$end':([2,3,6,7,9,34,79,],[-49,0,-1,-4,-3,-5,-2,]),'STRING':([23,],[31,]),'STATIC':([11,],[13,]),'ELSE':([81,98,109,118,119,130,132,],[-10,-14,124,-13,-12,-11,-15,]),'NEW':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,]),'PLUS':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,93,93,93,93,93,93,93,-47,93,-32,93,-31,-35,-33,93,93,-45,-34,93,93,-44,93,93,-36,]),'INT':([19,21,22,26,33,40,44,55,68,85,104,],[-49,27,-16,-17,27,-18,27,27,86,-49,27,]),'LET':([4,50,99,],[-48,59,117,]),'WHILE':([22,26,40,47,53,63,64,81,82,85,90,98,101,104,118,119,121,124,130,132,],[-16,-17,-18,54,-49,-9,54,-10,-8,-49,54,-14,54,-49,-13,-12,54,54,-11,-15,]),'LENGTH':([94,],[114,]),'TIMES':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,95,95,95,95,95,95,95,-47,95,95,95,95,-35,-33,95,95,-45,-34,95,95,-44,95,95,-36,]),'FALSE':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,]),'LBRACKET':([4,27,31,50,69,70,71,72,74,75,77,78,80,83,86,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,35,37,60,-39,-42,-43,-40,-41,96,96,96,96,96,105,96,96,-47,96,-32,96,-31,-35,-33,96,96,-45,-34,96,96,-44,96,96,-36,]),'MINUS':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,91,91,91,91,91,91,91,-47,91,-32,91,-31,-35,-33,91,91,-45,-34,91,91,-44,91,91,-36,]),'TRUE':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,]),'RETURN':([22,26,40,63,81,82,85,98,103,104,118,119,121,130,132,],[-16,-17,-18,-9,-10,-8,-49,-14,120,-49,-13,-12,-26,-11,-15,]),'MAIN':([17,],[20,]),'RPAREN':([4,43,48,56,57,69,70,71,72,74,75,80,83,84,88,97,102,106,107,108,110,111,112,114,115,123,126,129,131,134,136,138,139,140,],[-48,45,-49,67,-28,-39,-42,-43,-40,-41,90,100,101,-49,107,-46,-27,123,-47,-29,-32,-30,-31,-35,-33,-45,-34,-44,-49,-38,139,-49,-36,-37,]),'LBRACE':([4,5,12,15,16,18,22,26,40,45,47,53,63,64,67,81,82,85,90,98,101,104,118,119,121,124,130,132,],[-48,8,-49,19,-7,-6,-16,-17,-18,47,53,-49,-9,53,85,-10,-8,-49,53,-14,53,-49,-13,-12,53,53,-11,-15,]),'PUBLIC':([8,19,21,22,25,26,30,32,40,137,],[11,-49,-49,-16,33,-17,-24,-23,-18,-25,]),'RBRACE':([19,21,22,25,26,30,32,40,51,53,61,63,64,81,82,98,118,119,130,132,133,137,],[-49,-49,-16,34,-17,-24,-23,-18,61,-49,79,-9,81,-10,-8,-14,-13,-12,-11,-15,137,-25,]),'SYSTEM_PRINTLN':([22,26,40,47,53,63,64,81,82,85,90,98,101,104,118,119,121,124,130,132,],[-16,-17,-18,52,-49,-9,52,-10,-8,-49,52,-14,52,-49,-13,-12,52,52,-11,-15,]),'COMMA':([4,48,69,70,71,72,74,84,97,107,108,110,111,112,114,115,123,126,129,131,138,139,],[-48,55,-39,-42,-43,-40,-41,55,-46,-47,-29,-32,-30,-31,-35,-33,-45,-34,-44,135,135,-36,]),'LIT_INT':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,]),'LESS_THAN':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,92,92,92,92,92,92,92,-47,92,-32,92,-31,-35,-33,92,92,-45,-34,92,92,-44,92,92,-36,]),'ID':([1,4,10,14,19,21,22,24,26,27,28,29,33,38,39,40,41,44,46,47,53,55,58,59,60,62,63,64,65,66,68,73,76,81,82,85,89,90,91,92,93,94,95,96,98,101,104,105,117,118,119,120,121,124,125,130,132,135,],[4,-48,4,4,-49,4,-16,-20,-17,-21,-22,4,4,4,-19,-18,4,4,4,4,-49,4,4,4,4,4,-9,4,4,4,4,4,4,-10,-8,-49,4,4,4,4,4,4,4,4,-14,4,4,4,4,-13,-12,4,4,4,4,-11,-15,4,]),'SEMICOLON':([4,36,69,70,71,72,74,77,97,100,107,108,110,111,112,114,115,123,126,127,128,129,139,],[-48,40,-39,-42,-43,-40,-41,98,-46,118,-47,-29,-32,-30,-31,-35,-33,-45,-34,132,133,-44,-36,]),'DOT':([4,69,70,71,72,74,75,77,78,80,83,88,97,107,108,110,111,112,114,115,116,122,123,126,127,128,129,131,138,139,],[-48,-39,-42,-43,-40,-41,94,94,94,94,94,94,94,-47,94,-32,94,-31,-35,-33,94,94,-45,-34,94,94,-44,94,94,-36,]),'LPAREN':([4,20,42,49,52,54,58,59,60,62,65,73,76,87,89,91,92,93,95,96,105,113,117,120,125,135,],[-48,23,44,58,62,65,73,73,73,73,73,73,73,106,73,73,73,73,73,73,73,125,73,73,73,73,]),'IF':([22,26,40,47,53,63,64,81,82,85,90,98,101,104,118,119,121,124,130,132,],[-16,-17,-18,49,-49,-9,49,-10,-8,-49,49,-14,49,-49,-13,-12,49,49,-11,-15,]),'VOID':([13,],[17,]),'THIS':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,]),}
+_lr_action_items = {'RPAREN':([43,44,46,47,48,53,70,75,76,77,78,79,80,84,85,91,92,106,108,110,112,113,115,116,117,122,124,125,129,130,131,132,136,137,138,140,],[45,-52,-28,-30,52,-27,-29,-46,-47,-43,93,-45,-44,103,104,108,-51,122,-50,-34,-35,-33,-37,-31,-32,-49,-36,-52,-48,-40,-52,138,-39,-42,-38,-41,]),'PLUS':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,97,-45,-44,97,97,97,97,97,-51,-50,-34,97,-35,-33,-37,-31,-32,97,-49,97,-36,97,-48,97,-38,97,]),'RBRACE':([17,20,21,24,25,27,32,40,55,59,63,68,69,86,87,101,109,119,128,133,134,135,],[-52,-52,-17,34,-25,-16,-24,-18,63,-52,81,-9,86,-10,-8,-14,-12,-13,135,-15,-11,-26,]),'LBRACKET':([26,31,56,75,76,77,78,79,80,82,83,84,85,90,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[35,37,65,-46,-47,-43,95,-45,-44,95,95,95,95,107,95,-51,-50,-34,95,-35,-33,-37,-31,-32,95,-49,95,-36,95,-48,95,-38,95,]),'$end':([2,3,5,6,8,34,81,],[-52,0,-4,-1,-3,-5,-2,]),'LESS_THAN':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,99,-45,-44,99,99,99,99,99,-51,-50,99,99,-35,99,-37,-31,-32,99,-49,99,-36,99,-48,99,-38,99,]),'INT':([17,20,21,27,33,40,44,51,61,71,72,],[-52,26,-17,-16,26,-18,26,26,-52,26,90,]),'WHILE':([21,27,40,50,59,61,68,69,71,86,87,88,93,101,104,109,119,127,133,134,],[-17,-16,-18,54,-52,-52,-9,54,-52,-10,-8,54,54,-14,54,-12,-13,54,-15,-11,]),'STATIC':([10,],[12,]),'MINUS':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,94,-45,-44,94,94,94,94,94,-51,-50,-34,94,-35,-33,-37,-31,-32,94,-49,94,-36,94,-48,94,-38,94,]),'COMMA':([44,46,47,70,75,76,77,79,80,92,108,110,112,113,115,116,117,122,124,129,131,136,137,138,140,],[-52,51,-30,-29,-46,-47,-43,-45,-44,-51,-50,-34,-35,-33,-37,-31,-32,-49,-36,-48,-52,139,-42,-38,-41,]),'LPAREN':([19,42,54,57,58,62,64,65,66,67,73,74,89,94,95,96,97,99,100,105,107,114,118,125,139,],[22,44,62,66,67,73,73,73,73,73,73,73,106,73,73,73,73,73,73,73,73,125,73,73,73,]),'LENGTH':([98,],[115,]),'NOT':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,]),'LET':([56,102,],[64,118,]),'PUBLIC':([7,17,20,21,24,25,27,32,40,135,],[10,-52,-52,-17,33,-25,-16,-24,-18,-26,]),'NEW':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,]),'TRUE':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,]),'DOT':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,98,-45,-44,98,98,98,98,98,-51,-50,-34,98,-35,-33,-37,-31,-32,98,-49,98,-36,98,-48,98,-38,98,]),'RBRACKET':([35,37,75,76,77,79,80,83,92,108,110,111,112,113,115,116,117,122,123,124,129,138,],[39,41,-46,-47,-43,-45,-44,102,-51,-50,-34,124,-35,-33,-37,-31,-32,-49,129,-36,-48,-38,]),'SEMICOLON':([36,75,76,77,79,80,82,92,103,108,110,112,113,115,116,117,121,122,124,126,129,138,],[40,-46,-47,-43,-45,-44,101,-51,119,-50,-34,-35,-33,-37,-31,-32,128,-49,-36,133,-48,-38,]),'ID':([1,9,15,17,20,21,23,26,27,28,29,30,33,38,39,40,41,44,49,50,51,59,60,61,62,64,65,66,67,68,69,71,72,73,74,86,87,88,93,94,95,96,97,98,99,100,101,104,105,107,109,118,119,125,127,133,134,139,],[4,11,18,-52,23,-17,-23,-22,-16,-21,-19,36,23,42,-20,-18,43,23,53,56,23,-52,70,-52,75,75,75,75,75,-9,56,23,89,75,75,-10,-8,56,56,75,75,75,75,114,75,75,-14,56,75,75,-12,75,-13,75,56,-15,-11,75,]),'SYSTEM_PRINTLN':([21,27,40,50,59,61,68,69,71,86,87,88,93,101,104,109,119,127,133,134,],[-17,-16,-18,57,-52,-52,-9,57,-52,-10,-8,57,57,-14,57,-12,-13,57,-15,-11,]),'THIS':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,]),'CLASS':([0,2,5,6,8,34,81,],[1,-52,-4,9,-3,-5,-2,]),'VOID':([12,],[16,]),'TIMES':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,96,-45,-44,96,96,96,96,96,96,-50,96,96,-35,96,-37,96,96,96,-49,96,-36,96,-48,96,-38,96,]),'LIT_INT':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,]),'MAIN':([16,],[19,]),'IF':([21,27,40,50,59,61,68,69,71,86,87,88,93,101,104,109,119,127,133,134,],[-17,-16,-18,58,-52,-52,-9,58,-52,-10,-8,58,58,-14,58,-12,-13,58,-15,-11,]),'BOOLEAN':([17,20,21,27,33,40,44,51,61,71,],[-52,28,-17,-16,28,-18,28,28,-52,28,]),'FALSE':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,]),'AND':([75,76,77,78,79,80,82,83,84,85,91,92,108,110,111,112,113,115,116,117,121,122,123,124,126,129,131,138,140,],[-46,-47,-43,100,-45,-44,100,100,100,100,100,-51,-50,100,100,-35,100,-37,-31,-32,100,-49,100,-36,100,-48,100,-38,100,]),'STRING':([22,],[31,]),'ELSE':([86,101,109,119,120,133,134,],[-10,-14,-12,-13,127,-15,-11,]),'EXTENDS':([11,],[15,]),'LBRACE':([4,11,13,14,18,21,27,40,45,50,52,59,61,68,69,71,86,87,88,93,101,104,109,119,127,133,134,],[7,-52,-7,17,-6,-17,-16,-18,50,59,61,-52,-52,-9,59,-52,-10,-8,59,59,-14,59,-12,-13,59,-15,-11,]),'RETURN':([21,27,40,61,68,71,86,87,88,101,109,119,133,134,],[-17,-16,-18,-52,-9,-52,-10,-8,105,-14,-12,-13,-15,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'classdeclaration':([6,],[9,]),'statement':([47,64,90,101,121,124,],[51,82,109,119,82,130,]),'vardeclaration_star':([19,85,],[21,104,]),'type':([21,33,44,55,104,],[29,38,46,66,29,]),'statement_star':([53,104,],[64,121,]),'extends_opt':([12,],[15,]),'expression':([58,59,60,62,65,73,76,89,91,92,93,95,96,105,117,120,125,135,],[75,77,78,80,83,88,97,108,110,111,112,115,116,122,127,128,131,138,]),'methodbody':([85,],[103,]),'methoddeclaration_star':([21,],[25,]),'vardeclaration':([21,104,],[26,26,]),'params_opt':([48,84,],[56,102,]),'expression_opt':([131,138,],[136,140,]),'id':([1,10,14,21,29,33,38,41,44,46,47,55,58,59,60,62,64,65,66,68,73,76,89,90,91,92,93,94,95,96,101,104,105,117,120,121,124,125,135,],[5,12,18,28,36,28,42,43,28,48,50,28,70,70,70,70,50,70,84,87,70,70,70,50,70,70,70,113,70,70,50,28,70,70,70,50,50,70,70,]),'mainclass':([0,],[2,]),'methoddeclaration':([25,],[32,]),'goal':([0,],[3,]),'classdeclaration_star':([2,],[6,]),'empty':([2,12,19,21,48,53,84,85,104,131,138,],[7,16,22,30,57,63,57,22,63,134,134,]),}
+_lr_goto_items = {'empty':([2,11,17,20,44,59,61,71,125,131,],[5,13,21,25,47,68,21,68,130,137,]),'classdeclaration_star':([2,],[6,]),'vardeclaration_star':([17,61,],[20,71,]),'type_array':([20,33,44,51,71,],[29,29,29,29,29,]),'methoddeclaration_star':([20,],[24,]),'comma_args':([44,],[46,]),'extends_opt':([11,],[14,]),'vardeclaration':([20,71,],[27,27,]),'mainclass':([0,],[2,]),'expression_comma':([131,],[136,]),'args_opt':([44,],[48,]),'classdeclaration':([6,],[8,]),'expression':([62,64,65,66,67,73,74,94,95,96,97,99,100,105,107,118,125,139,],[78,82,83,84,85,91,92,110,111,112,113,116,117,121,123,126,131,140,]),'methoddeclaration':([24,],[32,]),'statement_star':([59,71,],[69,88,]),'expressions_opt':([125,],[132,]),'goal':([0,],[3,]),'statement':([50,69,88,93,104,127,],[55,87,87,109,120,134,]),'type':([20,33,44,51,71,],[30,38,49,60,30,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,53 +26,56 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> goal","S'",1,None,None,None),
-  ('goal -> mainclass classdeclaration_star','goal',2,'p_goal','minijava_parser.py',140),
-  ('mainclass -> CLASS id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET id RPAREN LBRACE statement RBRACE RBRACE','mainclass',17,'p_mainclass','minijava_parser.py',145),
-  ('classdeclaration_star -> classdeclaration_star classdeclaration','classdeclaration_star',2,'p_classdeclaration_star','minijava_parser.py',150),
-  ('classdeclaration_star -> empty','classdeclaration_star',1,'p_classdeclaration_star','minijava_parser.py',151),
-  ('classdeclaration -> CLASS id extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE','classdeclaration',7,'p_classdeclaration','minijava_parser.py',157),
-  ('extends_opt -> EXTENDS id','extends_opt',2,'p_extends_opt','minijava_parser.py',162),
-  ('extends_opt -> empty','extends_opt',1,'p_extends_opt','minijava_parser.py',163),
-  ('statement_star -> statement_star statement','statement_star',2,'p_statement_star','minijava_parser.py',169),
-  ('statement_star -> empty','statement_star',1,'p_statement_star','minijava_parser.py',170),
-  ('statement -> LBRACE statement_star RBRACE','statement',3,'p_statement_block','minijava_parser.py',176),
-  ('statement -> IF LPAREN expression RPAREN statement ELSE statement','statement',7,'p_statement_if','minijava_parser.py',182),
-  ('statement -> WHILE LPAREN expression RPAREN statement','statement',5,'p_statement_while','minijava_parser.py',188),
-  ('statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON','statement',5,'p_statement_syso','minijava_parser.py',194),
-  ('statement -> id LET expression SEMICOLON','statement',4,'p_statement_id_exp','minijava_parser.py',200),
-  ('statement -> id LBRACKET expression RBRACKET LET expression SEMICOLON','statement',7,'p_statement_id_array_exp','minijava_parser.py',206),
-  ('vardeclaration_star -> empty','vardeclaration_star',1,'p_vardeclaration_star','minijava_parser.py',211),
-  ('vardeclaration_star -> vardeclaration_star vardeclaration','vardeclaration_star',2,'p_vardeclaration_star','minijava_parser.py',212),
-  ('vardeclaration -> type id SEMICOLON','vardeclaration',3,'p_vardeclaration','minijava_parser.py',218),
-  ('type -> INT LBRACKET RBRACKET','type',3,'p_type_int_array','minijava_parser.py',224),
-  ('type -> BOOLEAN','type',1,'p_type_boolean','minijava_parser.py',230),
-  ('type -> INT','type',1,'p_type_int','minijava_parser.py',236),
-  ('type -> id','type',1,'p_type_id','minijava_parser.py',242),
-  ('methoddeclaration_star -> methoddeclaration_star methoddeclaration','methoddeclaration_star',2,'p_methoddeclaration_star','minijava_parser.py',247),
-  ('methoddeclaration_star -> empty','methoddeclaration_star',1,'p_methoddeclaration_star','minijava_parser.py',248),
-  ('methoddeclaration -> PUBLIC type id LPAREN type id params_opt RPAREN LBRACE methodbody RETURN expression SEMICOLON RBRACE','methoddeclaration',14,'p_methoddeclaration','minijava_parser.py',254),
-  ('methodbody -> vardeclaration_star statement_star','methodbody',2,'p_method_body','minijava_parser.py',259),
-  ('params_opt -> COMMA type id params_opt','params_opt',4,'p_params_opt','minijava_parser.py',263),
-  ('params_opt -> empty','params_opt',1,'p_params_opt','minijava_parser.py',264),
-  ('expression -> expression AND expression','expression',3,'p_expression_bin','minijava_parser.py',270),
-  ('expression -> expression LESS_THAN expression','expression',3,'p_expression_bin','minijava_parser.py',271),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_bin','minijava_parser.py',272),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_bin','minijava_parser.py',273),
-  ('expression -> expression TIMES expression','expression',3,'p_expression_bin','minijava_parser.py',274),
-  ('expression -> expression LBRACKET expression RBRACKET','expression',4,'p_expression_array','minijava_parser.py',280),
-  ('expression -> expression DOT LENGTH','expression',3,'p_expression_length','minijava_parser.py',286),
-  ('expression -> expression DOT id LPAREN expression expression_opt RPAREN','expression',7,'p_expression_params','minijava_parser.py',292),
-  ('expression_opt -> COMMA expression expression_opt','expression_opt',3,'p_expression_opt','minijava_parser.py',297),
-  ('expression_opt -> empty','expression_opt',1,'p_expression_opt','minijava_parser.py',298),
-  ('expression -> LIT_INT','expression',1,'p_expression_litint','minijava_parser.py',304),
-  ('expression -> TRUE','expression',1,'p_expression_true','minijava_parser.py',310),
-  ('expression -> FALSE','expression',1,'p_expression_false','minijava_parser.py',316),
-  ('expression -> id','expression',1,'p_expression_id','minijava_parser.py',322),
-  ('expression -> THIS','expression',1,'p_expression_this','minijava_parser.py',328),
-  ('expression -> NEW INT LBRACKET expression RBRACKET','expression',5,'p_expression_new_array','minijava_parser.py',334),
-  ('expression -> NEW id LPAREN RPAREN','expression',4,'p_expression_new_instance','minijava_parser.py',340),
-  ('expression -> NOT expression','expression',2,'p_expression_not','minijava_parser.py',346),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_paren','minijava_parser.py',352),
-  ('id -> ID','id',1,'p_id','minijava_parser.py',357),
-  ('empty -> <empty>','empty',0,'p_empty','minijava_parser.py',366),
+  ('goal -> mainclass classdeclaration_star','goal',2,'p_goal','parser.py',31),
+  ('mainclass -> CLASS ID LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET ID RPAREN LBRACE statement RBRACE RBRACE','mainclass',17,'p_mainclass','parser.py',36),
+  ('classdeclaration_star -> classdeclaration_star classdeclaration','classdeclaration_star',2,'p_classdeclaration_star','parser.py',41),
+  ('classdeclaration_star -> empty','classdeclaration_star',1,'p_classdeclaration_star','parser.py',42),
+  ('classdeclaration -> CLASS ID extends_opt LBRACE vardeclaration_star methoddeclaration_star RBRACE','classdeclaration',7,'p_classdeclaration','parser.py',48),
+  ('extends_opt -> EXTENDS ID','extends_opt',2,'p_extends_opt','parser.py',58),
+  ('extends_opt -> empty','extends_opt',1,'p_extends_opt','parser.py',59),
+  ('statement_star -> statement_star statement','statement_star',2,'p_statement_star','parser.py',65),
+  ('statement_star -> empty','statement_star',1,'p_statement_star','parser.py',66),
+  ('statement -> LBRACE statement_star RBRACE','statement',3,'p_statement_block','parser.py',72),
+  ('statement -> IF LPAREN expression RPAREN statement ELSE statement','statement',7,'p_statement_if','parser.py',78),
+  ('statement -> WHILE LPAREN expression RPAREN statement','statement',5,'p_statement_while','parser.py',84),
+  ('statement -> SYSTEM_PRINTLN LPAREN expression RPAREN SEMICOLON','statement',5,'p_statement_syso','parser.py',92),
+  ('statement -> ID LET expression SEMICOLON','statement',4,'p_statement_id_exp','parser.py',98),
+  ('statement -> ID LBRACKET expression RBRACKET LET expression SEMICOLON','statement',7,'p_statement_id_array_exp','parser.py',105),
+  ('vardeclaration_star -> vardeclaration_star vardeclaration','vardeclaration_star',2,'p_vardeclaration_star','parser.py',110),
+  ('vardeclaration_star -> empty','vardeclaration_star',1,'p_vardeclaration_star','parser.py',111),
+  ('vardeclaration -> type ID SEMICOLON','vardeclaration',3,'p_vardeclaration','parser.py',117),
+  ('type -> type_array','type',1,'p_type_int_array','parser.py',125),
+  ('type_array -> INT LBRACKET RBRACKET','type_array',3,'p_type_int_array_','parser.py',130),
+  ('type -> BOOLEAN','type',1,'p_type_boolean','parser.py',136),
+  ('type -> INT','type',1,'p_type_int','parser.py',142),
+  ('type -> ID','type',1,'p_type_id','parser.py',148),
+  ('methoddeclaration_star -> methoddeclaration_star methoddeclaration','methoddeclaration_star',2,'p_methoddeclaration_star','parser.py',153),
+  ('methoddeclaration_star -> empty','methoddeclaration_star',1,'p_methoddeclaration_star','parser.py',154),
+  ('methoddeclaration -> PUBLIC type ID LPAREN args_opt RPAREN LBRACE vardeclaration_star statement_star RETURN expression SEMICOLON RBRACE','methoddeclaration',13,'p_methoddeclaration','parser.py',160),
+  ('args_opt -> type ID','args_opt',2,'p_args_opt','parser.py',165),
+  ('args_opt -> comma_args','args_opt',1,'p_args_opt','parser.py',166),
+  ('comma_args -> comma_args COMMA type ID','comma_args',4,'p_comma_args','parser.py',171),
+  ('comma_args -> empty','comma_args',1,'p_comma_args','parser.py',172),
+  ('expression -> expression LESS_THAN expression','expression',3,'p_expression_bin','parser.py',178),
+  ('expression -> expression AND expression','expression',3,'p_expression_bin','parser.py',179),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_bin','parser.py',180),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_bin','parser.py',181),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_bin','parser.py',182),
+  ('expression -> expression LBRACKET expression RBRACKET','expression',4,'p_expression_array','parser.py',204),
+  ('expression -> expression DOT LENGTH','expression',3,'p_expression_length','parser.py',211),
+  ('expression -> expression DOT ID LPAREN expressions_opt RPAREN','expression',6,'p_expression_params','parser.py',217),
+  ('expressions_opt -> expression expression_comma','expressions_opt',2,'p_expression_opt','parser.py',223),
+  ('expressions_opt -> empty','expressions_opt',1,'p_expression_opt','parser.py',224),
+  ('expression_comma -> expression_comma COMMA expression','expression_comma',3,'p_expression_comme','parser.py',229),
+  ('expression_comma -> empty','expression_comma',1,'p_expression_comme','parser.py',230),
+  ('expression -> LIT_INT','expression',1,'p_expression_litint','parser.py',235),
+  ('expression -> TRUE','expression',1,'p_expression_true','parser.py',242),
+  ('expression -> FALSE','expression',1,'p_expression_false','parser.py',249),
+  ('expression -> ID','expression',1,'p_expression_id','parser.py',256),
+  ('expression -> THIS','expression',1,'p_expression_this','parser.py',263),
+  ('expression -> NEW INT LBRACKET expression RBRACKET','expression',5,'p_expression_new_array','parser.py',269),
+  ('expression -> NEW ID LPAREN RPAREN','expression',4,'p_expression_new_instance','parser.py',276),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_paren','parser.py',282),
+  ('expression -> NOT expression','expression',2,'p_expression_not','parser.py',289),
+  ('empty -> <empty>','empty',0,'p_empty','parser.py',306),
 ]
