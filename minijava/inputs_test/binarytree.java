@@ -16,7 +16,6 @@ class BT {
 		boolean ntb ;
 		int nti ;
 
-		
 		root = new Tree();
 		// ntb = root.Init(16);
 		// ntb = root.Print();
@@ -97,13 +96,13 @@ class BT {
 // 	return has_left ;
 //     }
 
-//     public boolean SetHas_Left(boolean val){
-// 	 has_left = val ;
+//     public boolean SetHas_Left(boolean val1){
+// 	 has_left = val1 ;
 // 	 return true ;
 //     }
 
-//     public boolean SetHas_Right(boolean val){
-// 	 has_right = val ;
+//     public boolean SetHas_Right(boolean val2){
+// 	 has_right = val2 ;
 // 	 return true ;
 //     }
     
@@ -111,28 +110,28 @@ class BT {
 //     // returns true if they are equal and false
 //     // otherwise
 //     public boolean Compare(int num1 , int num2){
-// 	boolean ntb ;
-// 	int nti ;
+// 		boolean ntb ;
+// 		int nti ;
 
-// 	ntb = false ;
-// 	nti = num2 + 1 ;
-// 	if (num1 < num2) ntb = false ;
-// 	else if (!(num1 < nti)) ntb = false ;
-// 	else ntb = true ;
-// 	return ntb ;
+// 		ntb = false ;
+// 		nti = num2 + 1 ;
+// 		if (num1 < num2) ntb = false ;
+// 		else if (!(num1 < nti)) ntb = false ;
+// 		else ntb = true ;
+// 		return ntb ;
 //     }
 
 
 //     // Insert a new element in the tree
 //     public boolean Insert(int v_key){
 // 	Tree new_node ;
-// 	boolean ntb ;
+// 	boolean ntb2 ;
 // 	boolean cont ;
 // 	int key_aux ;
 // 	Tree current_node ;
 
 // 	new_node = new Tree();
-// 	ntb = new_node.Init(v_key) ;
+// 	ntb2 = new_node.Init(v_key) ;
 // 	current_node = this ;
 // 	cont = true ;
 // 	while (cont){
@@ -142,8 +141,8 @@ class BT {
 // 		    current_node = current_node.GetLeft() ;
 // 		else {
 // 		    cont = false ;
-// 		    ntb = current_node.SetHas_Left(true);
-// 		    ntb = current_node.SetLeft(new_node);
+// 		    ntb2 = current_node.SetHas_Left(true);
+// 		    ntb2 = current_node.SetLeft(new_node);
 // 		}
 // 	    }
 // 	    else{
@@ -151,8 +150,8 @@ class BT {
 // 		    current_node = current_node.GetRight() ;
 // 		else {
 // 		    cont = false ;
-// 		    ntb = current_node.SetHas_Right(true);
-// 		    ntb = current_node.SetRight(new_node);
+// 		    ntb2 = current_node.SetHas_Right(true);
+// 		    ntb2 = current_node.SetRight(new_node);
 // 		}
 // 	    }
 // 	}
@@ -168,7 +167,7 @@ class BT {
 // 	boolean found ;
 // 	boolean is_root ;
 // 	int key_aux ;
-// 	boolean ntb ;
+// 	boolean ntb3 ;
 
 // 	current_node = this ;
 // 	parent_node = this ;
@@ -194,10 +193,10 @@ class BT {
 // 		    if (is_root) 
 // 			if ((!current_node.GetHas_Right()) && 
 // 			    (!current_node.GetHas_Left()) )
-// 			    ntb = true ;
+// 			    ntb3 = true ;
 // 			else 
-// 			    ntb = this.Remove(parent_node,current_node); 
-// 		    else ntb = this.Remove(parent_node,current_node);
+// 			    ntb3 = this.Remove(parent_node,current_node); 
+// 		    else ntb3 = this.Remove(parent_node,current_node);
 // 		    found = true ;
 // 		    cont = false ;
 // 		}
@@ -210,27 +209,27 @@ class BT {
 //     // Check if the element to be removed will use the
 //     // righ or left subtree if one exists
 //     public boolean Remove(Tree p_node, Tree c_node){
-// 	boolean ntb ;
+// 	boolean ntb4 ;
 // 	int auxkey1 ;
 // 	int auxkey2 ;
 	
 // 	if (c_node.GetHas_Left()) 
-// 	    ntb = this.RemoveLeft(p_node,c_node) ;
+// 	    ntb4 = this.RemoveLeft(p_node,c_node) ;
 // 	else 
 // 	    if (c_node.GetHas_Right())
-// 		ntb = this.RemoveRight(p_node,c_node) ;
+// 		ntb4 = this.RemoveRight(p_node,c_node) ;
 // 	    else {
 // 		auxkey1 = c_node.GetKey();
 // 		//auxtree01 = p_node.GetLeft() ;
 // 		//auxkey2 = auxtree01.GetKey() ;
 // 		auxkey2 = (p_node.GetLeft()).GetKey() ;
 // 		if (this.Compare(auxkey1,auxkey2)) {
-// 		    ntb = p_node.SetLeft(my_null);
-// 		    ntb = p_node.SetHas_Left(false);
+// 		    ntb4 = p_node.SetLeft(my_null);
+// 		    ntb4 = p_node.SetHas_Left(false);
 // 		}
 // 		else {
-// 		    ntb = p_node.SetRight(my_null);
-// 		    ntb = p_node.SetHas_Right(false);
+// 		    ntb4 = p_node.SetRight(my_null);
+// 		    ntb4 = p_node.SetHas_Right(false);
 // 		}
 // 	    }
 // 	return true ;
@@ -241,18 +240,18 @@ class BT {
 //     // found and remove the leaf. This is done with the
 //     // right subtree
 //     public boolean RemoveRight(Tree p_node, Tree c_node){
-// 	boolean ntb ;
+// 	boolean ntb5 ;
 
 // 	while (c_node.GetHas_Right()){
 // 	    //auxtree01 = c_node.GetRight() ;
 // 	    //auxint02 = auxtree01.GetKey();
-// 	    //ntb = c_node.SetKey(auxint02);
-// 	    ntb = c_node.SetKey((c_node.GetRight()).GetKey());
+// 	    //ntb5 = c_node.SetKey(auxint02);
+// 	    ntb5 = c_node.SetKey((c_node.GetRight()).GetKey());
 // 	    p_node = c_node ;
 // 	    c_node = c_node.GetRight() ;
 // 	}
-// 	ntb = p_node.SetRight(my_null);
-// 	ntb = p_node.SetHas_Right(false);
+// 	ntb5 = p_node.SetRight(my_null);
+// 	ntb5 = p_node.SetHas_Right(false);
 // 	return true ;
 //     }
 
@@ -261,18 +260,18 @@ class BT {
 //     // found and remove the leaf. This is done with the
 //     // left subtree
 //     public boolean RemoveLeft(Tree p_node, Tree c_node){
-// 	boolean ntb ;
+// 	boolean ntb5 ;
 
 // 	while (c_node.GetHas_Left()){
 // 	    //auxtree01 = c_node.GetLeft() ;
 // 	    //auxint02 = auxtree01.GetKey();
-// 	    //ntb = c_node.SetKey(auxint02);
-// 	    ntb = c_node.SetKey((c_node.GetLeft()).GetKey());
+// 	    //ntb5 = c_node.SetKey(auxint02);
+// 	    ntb5 = c_node.SetKey((c_node.GetLeft()).GetKey());
 // 	    p_node = c_node ;
 // 	    c_node = c_node.GetLeft() ;
 // 	}
-// 	ntb = p_node.SetLeft(my_null);
-// 	ntb = p_node.SetHas_Left(false);
+// 	ntb5 = p_node.SetLeft(my_null);
+// 	ntb5 = p_node.SetHas_Left(false);
 // 	return true ;
 //     }
 
@@ -308,30 +307,29 @@ class BT {
 //     // Invoke the method to really print the tree elements
 //     public boolean Print(){
 // 	Tree current_node;
-// 	boolean ntb ;
+// 	boolean ntb6 ;
 
 // 	current_node = this ;
-// 	ntb = this.RecPrint(current_node);
+// 	ntb6 = this.RecPrint(current_node);
 // 	return true ;
 //     }
 
 //     // Print the elements of the tree
 //     public boolean RecPrint(Tree node){
-// 	boolean ntb ;
+// 	boolean ntb6 ;
 
 // 	if (node.GetHas_Left()){
 // 	    //auxtree01 = node.GetLeft() ;
-// 	    //ntb = this.RecPrint(auxtree01);
-// 	    ntb = this.RecPrint(node.GetLeft());
-// 	} else ntb = true ;
+// 	    //ntb6 = this.RecPrint(auxtree01);
+// 	    ntb6 = this.RecPrint(node.GetLeft());
+// 	} else ntb6 = true ;
 // 	System.out.println(node.GetKey());
 // 	if (node.GetHas_Right()){
 // 	    //auxtree01 = node.GetRight() ;
-// 	    //ntb = this.RecPrint(auxtree01);
-// 	    ntb = this.RecPrint(node.GetRight());
-// 	} else ntb = true ;
+// 	    //ntb6 = this.RecPrint(auxtree01);
+// 	    ntb6 = this.RecPrint(node.GetRight());
+// 	} else ntb6 = true ;
 // 	return true ;
 //     }
 
 // }
-   
